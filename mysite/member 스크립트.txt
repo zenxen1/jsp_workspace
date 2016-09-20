@@ -1,0 +1,874 @@
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation. All rights reserved.
+
+C:\Users\student>sqlplus manager/manager
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:28:50 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager/manager
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting SQL*Plus
+
+C:\Users\student>sqlplus system/sytem
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:30:08 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting SQL*Plus
+
+C:\Users\student>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:31:58 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: posman
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> exit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\student>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:32:19 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: system
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table web0919
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\wep0919.dbf';
+datafile 'C:\oraclexe\app\oracle\oradata\XE\wep0919.dbf'
+*
+ERROR at line 2:
+ORA-00922: missing or invalid option
+
+
+SQL> create tablespace web0919 datafile 'C:\oraclexe\app\oracle\oradata\XE\web0919.dbf' size 20m;
+
+Tablespace created.
+
+SQL> create user web0919
+  2  idebtified by web0919
+  3  default tablespace web0919
+  4  quota unlimited on web0919;
+idebtified by web0919
+*
+ERROR at line 2:
+ORA-00922: missing or invalid option
+
+
+SQL> create user web0919
+  2  identified by web0919
+  3  default tablespace wep0919
+  4
+SQL> create user web0919
+  2  identified by web0919
+  3  default tablespace web0919
+  4  quota unlimited on web0919;
+
+User created.
+
+SQL> grant create session,
+  2  create table,
+  3
+SQL> create user java0919
+  2  identified by java0919
+  3  default tablespace web0919
+  4  quota unlimited on web0919;
+
+User created.
+
+SQL> grant create session,
+  2  create table,
+  3  create sequence to java0919
+  4  ;
+
+Grant succeeded.
+
+SQL> conn java0919/java0919
+Connected.
+SQL> show user;
+USER is "JAVA0919"
+SQL> create table test(
+  2  name varchar2(20),
+  3  age number
+  4  );
+
+Table created.
+
+SQL> insert into test (name) values ('wonwon');
+
+1 row created.
+
+SQL> insert into test (name,age) values ('wonwon',33);
+
+1 row created.
+
+SQL> select * from test;
+
+NAME                                            AGE
+---------------------------------------- ----------
+wonwon
+wonwon                                           33
+
+SQL> commit;
+
+Commit complete.
+
+SQL> show user;
+USER is "JAVA0919"
+SQL> show user
+USER is "JAVA0919"
+SQL> create table member(
+  2  member_id number primary key
+  3  ,id varchar2(20)
+  4  ,password varchar2(20)
+  5  ,name varchar2(20)
+  6  );
+
+Table created.
+
+SQL> create sequence seq_member
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation. All rights reserved.
+
+C:\Users\student>sqlplus manager/manager
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:28:50 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager/manager
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting SQL*Plus
+
+C:\Users\student>sqlplus system/sytem
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:30:08 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting SQL*Plus
+
+C:\Users\student>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:31:58 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: posman
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> exit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\student>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 월 9월 19 13:32:19 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: manager
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: system
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table web0919
+  2  datafile 'C:\oraclexe\app\oracle\oradata\XE\wep0919.dbf';
+datafile 'C:\oraclexe\app\oracle\oradata\XE\wep0919.dbf'
+*
+ERROR at line 2:
+ORA-00922: missing or invalid option
+
+
+SQL> create tablespace web0919 datafile 'C:\oraclexe\app\oracle\oradata\XE\web0919.dbf' size 20m;
+
+Tablespace created.
+
+SQL> create user web0919
+  2  idebtified by web0919
+  3  default tablespace web0919
+  4  quota unlimited on web0919;
+idebtified by web0919
+*
+ERROR at line 2:
+ORA-00922: missing or invalid option
+
+
+SQL> create user web0919
+  2  identified by web0919
+  3  default tablespace wep0919
+  4
+SQL> create user web0919
+  2  identified by web0919
+  3  default tablespace web0919
+  4  quota unlimited on web0919;
+
+User created.
+
+SQL> grant create session,
+  2  create table,
+  3
+SQL> create user java0919
+  2  identified by java0919
+  3  default tablespace web0919
+  4  quota unlimited on web0919;
+
+User created.
+
+SQL> grant create session,
+  2  create table,
+  3  create sequence to java0919
+  4  ;
+
+Grant succeeded.
+
+SQL> conn java0919/java0919
+Connected.
+SQL> show user;
+USER is "JAVA0919"
+SQL> create table test(
+  2  name varchar2(20),
+  3  age number
+  4  );
+
+Table created.
+
+SQL> insert into test (name) values ('wonwon');
+
+1 row created.
+
+SQL> insert into test (name,age) values ('wonwon',33);
+
+1 row created.
+
+SQL> select * from test;
+
+NAME                                            AGE
+---------------------------------------- ----------
+wonwon
+wonwon                                           33
+
+SQL> commit;
+
+Commit complete.
+
+SQL> show user;
+USER is "JAVA0919"
+SQL> show user
+USER is "JAVA0919"
+SQL> create table member(
+  2  member_id number primary key
+  3  ,id varchar2(20)
+  4  ,password varchar2(20)
+  5  ,name varchar2(20)
+  6  );
+
+Table created.
+
+SQL> create sequence seq_member
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

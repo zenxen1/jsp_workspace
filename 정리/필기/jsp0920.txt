@@ -24,8 +24,8 @@ jsp에서 사용할 jar,class의 위치는 그 위치가 정해져 있다(누가 정했나? sun 에서...
 sun의스펙을 모든 서버 제조사들이 따르는 것이다...
 tomcat, weblogic을 사용하던 jar,class의 위치는 바뀌지 않음
 
-/WEB-INF/lib
-/WEB-INF/classes
+/WEB-INF/lib - jar파일
+/WEB-INF/classes - .class파일
 
 /WEN-INF/는 브라이저로즉 클라이언트가 접근할수없다. 보안폴더
 

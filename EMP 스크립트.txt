@@ -1,0 +1,279 @@
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation. All rights reserved.
+
+C:\Users\student>sqlplus java0919/java0919
+
+SQL*Plus: Release 11.2.0.2.0 Production on 수 9월 21 09:09:40 2016
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> show tables;
+SP2-0158: unknown SHOW option "tables"
+SQL> desc user_tables;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+
+ TABLE_NAME                                NOT NULL VARCHAR2(30)
+ TABLESPACE_NAME                                    VARCHAR2(30)
+ CLUSTER_NAME                                       VARCHAR2(30)
+ IOT_NAME                                           VARCHAR2(30)
+ STATUS                                             VARCHAR2(8)
+ PCT_FREE                                           NUMBER
+ PCT_USED                                           NUMBER
+ INI_TRANS                                          NUMBER
+ MAX_TRANS                                          NUMBER
+ INITIAL_EXTENT                                     NUMBER
+ NEXT_EXTENT                                        NUMBER
+ MIN_EXTENTS                                        NUMBER
+ MAX_EXTENTS                                        NUMBER
+ PCT_INCREASE                                       NUMBER
+ FREELISTS                                          NUMBER
+ FREELIST_GROUPS                                    NUMBER
+ LOGGING                                            VARCHAR2(3)
+ BACKED_UP                                          VARCHAR2(1)
+ NUM_ROWS                                           NUMBER
+ BLOCKS                                             NUMBER
+ EMPTY_BLOCKS                                       NUMBER
+ AVG_SPACE                                          NUMBER
+ CHAIN_CNT                                          NUMBER
+ AVG_ROW_LEN                                        NUMBER
+ AVG_SPACE_FREELIST_BLOCKS                          NUMBER
+ NUM_FREELIST_BLOCKS                                NUMBER
+ DEGREE                                             VARCHAR2(40)
+ INSTANCES                                          VARCHAR2(40)
+ CACHE                                              VARCHAR2(20)
+ TABLE_LOCK                                         VARCHAR2(8)
+ SAMPLE_SIZE                                        NUMBER
+ LAST_ANALYZED                                      DATE
+ PARTITIONED                                        VARCHAR2(3)
+ IOT_TYPE                                           VARCHAR2(12)
+ TEMPORARY                                          VARCHAR2(1)
+ SECONDARY                                          VARCHAR2(1)
+ NESTED                                             VARCHAR2(3)
+ BUFFER_POOL                                        VARCHAR2(7)
+ FLASH_CACHE                                        VARCHAR2(7)
+ CELL_FLASH_CACHE                                   VARCHAR2(7)
+ ROW_MOVEMENT                                       VARCHAR2(8)
+ GLOBAL_STATS                                       VARCHAR2(3)
+ USER_STATS                                         VARCHAR2(3)
+ DURATION                                           VARCHAR2(15)
+ SKIP_CORRUPT                                       VARCHAR2(8)
+ MONITORING                                         VARCHAR2(3)
+ CLUSTER_OWNER                                      VARCHAR2(30)
+ DEPENDENCIES                                       VARCHAR2(8)
+ COMPRESSION                                        VARCHAR2(8)
+ COMPRESS_FOR                                       VARCHAR2(12)
+ DROPPED                                            VARCHAR2(3)
+ READ_ONLY                                          VARCHAR2(3)
+ SEGMENT_CREATED                                    VARCHAR2(3)
+ RESULT_CACHE                                       VARCHAR2(7)
+
+SQL> select table_name, tablespace_name
+  2  from user_tables;
+
+TABLE_NAME
+------------------------------------------------------------
+TABLESPACE_NAME
+------------------------------------------------------------
+TEST
+WEB0919
+
+MEMBER
+WEB0919
+
+
+SQL> -- 부서 테이블 생성/레코드 넣기
+SQL> --------------------------------------------------------------
+SQL> create table dept(
+  2  deptno number
+  3  ,dname varchar2(14)
+  4  ,loc varchar2(13)
+  5  ,primary key(deptno)
+  6  );
+
+Table created.
+
+SQL>
+SQL>
+SQL> --------------------------------------------------------------
+SQL> -- 사원 테이블 생성/레코드 넣기
+SQL> --------------------------------------------------------------
+SQL>
+SQL> create table emp(
+  2  empno number
+  3  ,ename varchar2(10)
+  4  ,job varchar2(9)
+  5  ,mgr number
+  6  ,hiredate date
+  7  ,sal number
+  8  ,comm number
+  9  ,deptno number
+ 10  ,primary key(empno)
+ 11  );
+
+Table created.
+
+SQL>
+SQL> insert into dept(deptno,dname,loc) values(10,'ACCOUNTING','NEW YORK');
+
+1 row created.
+
+SQL> insert into dept(deptno,dname,loc) values(20,'RESEARCH','DALLAS');
+
+1 row created.
+
+SQL> insert into dept(deptno,dname,loc) values(30,'SALES','CHICAGO');
+
+1 row created.
+
+SQL> insert into dept(deptno,dname,loc) values(40,'OPERATIONS','BOSTON');
+
+1 row created.
+
+SQL>
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7369,'SMITH
+','CLERK',7902,'80/12/17',800,20);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7499,'
+ALLEN','SALESMAN',7698,'81/02/20',1600,300,30);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7521,'
+WARD','SALESMAN',7698,'81/02/22',1250,500,30);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7566,'JONES
+','MANAGER',7839,'81/04/02',2975,20);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7654,'
+MARTIN','SALESMAN',7698,'81/09/28',1250,1400,30);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7698,'BLAKE
+','MANAGER',7839,'81/05/01',2850,30);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7782,'CLARK
+','MANAGER',7839,'81/06/09',2450,10);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7788,'SCOTT
+','ANALYST',7566,'87/04/19',3000,20);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,hiredate,sal,deptno) values(7839,'KING','PR
+ESIDENT','81/11/17',5000,10);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(7844,'
+TURNER','SALESMAN',7698,'81/09/08',1500,0,30);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7876,'ADAMS
+','CLERK',7788,'87/05/23',1100,20);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7900,'JAMES
+','CLERK',7698,'81/12/03',950,30);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7902,'FORD'
+,'ANALYST',7566,'81/12/03',3000,20);
+
+1 row created.
+
+SQL> insert into emp(empno,ename,job,mgr,hiredate,sal,deptno) values(7934,'MILLE
+R','CLERK',7782,'82/01/23',1300,10);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select table_name from user_tables;
+
+TABLE_NAME
+------------------------------------------------------------
+TEST
+MEMBER
+DEPT
+EMP
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

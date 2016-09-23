@@ -9,7 +9,8 @@
 	String board_id = request.getParameter("board_id");
 	out.print(board_id);
 	
-	int result = boardDAO.boardDelete(board_id);
+	
+	int result = boardDAO.boardDelete(Integer.parseInt(board_id));
 	
 	out.print("<script>");
 	if(result !=0){
@@ -20,6 +21,6 @@
 		out.print("history.back();");
 	}
 	out.print("</script>");
-
+	
 
 %>

@@ -53,8 +53,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
-		
-		
+
 		try {
 			con = pool.getConnection();
 			String sql = "select * from board order by board_id desc";
@@ -66,16 +65,17 @@ public class BoardDAO {
 			// 종료했음 에러 밠생
 			while (rs.next()) {
 				BoardDTO dto = new BoardDTO();// 텅빈 DTO
-				
+
 				dto.setBoard_id(rs.getInt("board_id"));
 				dto.setWriter(rs.getString("writer"));
 				dto.setTitle(rs.getString("title"));
 				dto.setRegdate(rs.getString("regdate"));
 				dto.setHit(rs.getInt("hit"));
 				dto.setContent(rs.getString("content"));
-				
-				list.add(dto);//컬렉션에 게시물 1건 추가!!
-			};
+
+				list.add(dto);// 컬렉션에 게시물 1건 추가!!
+			}
+			;
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -85,41 +85,51 @@ public class BoardDAO {
 		}
 		return list;
 	}
-	
-	//게시물 1건 가져오기
-	public List detailSelect(String board_id){
-		Connection con=null;
+
+	// 게시물 1건 가져오기
+	public BoardDTO detailSelect(int board_id) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
-		
+		// ArrayList<BoardDTO> list = new ArrayList<BoardDTO>();
+		BoardDTO dto = null;
+
 		try {
 			con = pool.getConnection();
-			String sql = "select * from board where board_id ="+board_id;
-			
+
+			// String sql = "select * from board where board_id ="+board_id;
+			String sql = "select * from board where board_id =?";
+
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_id);
+
 			rs = pstmt.executeQuery();
-			
-			rs.next();
-			BoardDTO dto = new BoardDTO();
-			
-			dto.setBoard_id(rs.getInt("board_id"));
-			dto.setWriter(rs.getString("writer"));
-			dto.setTitle(rs.getString("title"));
-			dto.setRegdate(rs.getString("regdate"));
-			dto.setHit(rs.getInt("hit"));
-			dto.setContent(rs.getString("content"));
-			
-			list.add(dto);//컬렉션에 게시물 1건 추가!!
-			
+
+			if (rs.next()) {
+				dto = new BoardDTO();
+
+				dto.setBoard_id(rs.getInt("board_id"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setTitle(rs.getString("title"));
+				dto.setRegdate(rs.getString("regdate"));
+				dto.setHit(rs.getInt("hit"));
+				dto.setContent(rs.getString("content"));
+
+				// list.add(dto);//컬렉션에 게시물 1건 추가!!
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
 		}
-		return list;
+		// return list;
+		return dto;
 	}
-	
-	public int boardUpdate(String board_id, String writer, String title, String content) {
+
+	//public int boardUpdate(String board_id, String writer, String title, String content) {
+	  public int boardUpdate(BoardDTO dto){	
 		int result = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -127,12 +137,12 @@ public class BoardDAO {
 		try {
 			con = pool.getConnection();
 
-			String sql = "Update board set writer =?, title =?, content = ? where board_id="+ board_id;
+			String sql = "Update board set writer =?, title =?, content = ? where board_id=" + dto.getBoard_id();
 
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, writer);
-			pstmt.setString(2, title);
-			pstmt.setString(3, content);
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setString(2, dto.getTitle());
+			pstmt.setString(3, dto.getContent());
 
 			result = pstmt.executeUpdate();
 
@@ -144,8 +154,8 @@ public class BoardDAO {
 		}
 		return result;
 	}
-	
-	public int boardDelete(String board_id) {
+
+	public int boardDelete(int board_id) {
 		int result = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -153,7 +163,7 @@ public class BoardDAO {
 		try {
 			con = pool.getConnection();
 
-			String sql = "delete from board where board_id ="+ board_id;
+			String sql = "delete from board where board_id =" + board_id;
 
 			pstmt = con.prepareStatement(sql);
 

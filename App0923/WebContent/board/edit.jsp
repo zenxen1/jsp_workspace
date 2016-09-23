@@ -1,26 +1,4 @@
-<%@page import="com.sds.model.board.BoardDAO"%>
-<%@page import="com.sds.model.board.BoardDTO"%>
-<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=utf-8"%>
-
-<%!
-	//멤버변수는 인스턴스가 죽을때같이 죽는다. 즉 인스턴와 생을 같이한다
-	BoardDAO boardDAO = new BoardDAO(); 
-
-%>
-
-<%
-	String board_id = request.getParameter("board_id");
-	out.print(board_id);
-	String sql ="select * from board where board_id="+board_id;
-	out.print(sql);
-	
-	BoardDTO dto = boardDAO.detailSelect(Integer.parseInt(board_id));
-	
-%>
-
-
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -46,33 +24,9 @@ background:url("/board/images/write_bg.gif");
 border:#C3C3C3 1px solid 
 }
 #copyright{font-size:9pt;}
-a{text-decoration:none}
-img{border:0px}
 </style>
-<script type="text/javascript">
-
-function boardDelete(){
-	//form1.action = "/board/delete_db.jsp"; //요청할 서버의 URL
-	//form1.submit(); //전송 행위!! 전송이 일어나는 시점!!
-	
-	if(confirm("삭제하시겠습니까?")){
-		location.href ="/board/delete_db.jsp?board_id=<%=dto.getBoard_id()%>";
-	}
-	
-}
-
-function boardUpdate(){
-	if(confirm("수정하시게습니까?")){
-		form1.action = "/board/update_db.jsp?board_id=<%=board_id%>"; //요청할 서버의 URL
-		form1.submit(); //전송 행위!! 전송이 일어나는 시점!!
-	}
-	
-}
-	
-</script>
 </head>
 <body>
-<form name="form1" method="post">
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td><img src="/board/images/ceil.gif" width="603" height="25"></td>
@@ -86,22 +40,20 @@ function boardUpdate(){
 	<tr>	
 		<td id="list"><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td width="100"><input type="hidden" name="board_id" value="<%=dto.getBoard_id() %>">&nbsp;</td>
+            <td width="100">&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
           <tr id="writer">
-          
-          
             <td height="25" align="center">작성자</td>
-            <td><input type="text" name="writer" value="<%=dto.getWriter() %>"></td>
+            <td><input type="text" name="textfield"></td>
           </tr>
           <tr id="title">
             <td height="25" align="center">제목</td>
-            <td><input type="text" name="title" value="<%=dto.getTitle() %>"></td>
+            <td><input type="text" name="textfield2"></td>
           </tr>
           <tr id="content">
             <td align="center">내용</td>
-            <td><textarea name="content" style=""><%=dto.getContent() %></textarea></td>
+            <td><textarea name="content" style=""></textarea></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -111,8 +63,7 @@ function boardUpdate(){
 	</tr>
   <tr>
     <td height="30" align="right" style="padding-right:2px;">
-	<img src="/board/images/write_btin.gif" width="61" height="20" onClick="boardUpdate()">
-	<img src="/board/images/delete_btn.gif" width="61" height="20" onClick="boardDelete()"> <a href="list.jsp"><img src="/board/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
+	<img src="/board/images/write_btin.gif" width="61" height="20"> <img src="/board/images/list_btn.gif" width="61" height="20">	</td>
   </tr>
   <tr>
     <td height="1" bgcolor="#CCCCCC"></td>
@@ -121,6 +72,5 @@ function boardUpdate(){
     <td height="20" align="center" id="copyright">Copyright zino All Rights Reserved </td>
   </tr>
 </table>
-</form>
 </body>
 </html>

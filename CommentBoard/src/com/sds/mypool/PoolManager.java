@@ -2,7 +2,7 @@
  * 우리의 경우)jdbc/oracle이 검색 키워드이다!!
  * */
 
-package com.sds.pool.copy;
+package com.sds.mypool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +22,7 @@ public class PoolManager {
 	private PoolManager() {
 		try {
 			context = new InitialContext();
-			context.lookup("java:/comp/env/jdbc/oracle");
+			ds = (DataSource)context.lookup("java:/comp/env/jdbc/oracle");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

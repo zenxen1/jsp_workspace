@@ -1,0 +1,22 @@
+int currentPage;
+int totalRecord;
+int pageSize;
+int totalPage;
+int blockPage;
+int firstPage=currentPage -(currentPage-1)%blockSize
+int lastPage = firstPage + (blockSize-1)
+int curPos
+
+javeEE
+tag중 서버측에서실행되는 태그를 빈즈태그
+왜 쓰나? jsp스크립트 코드를단순화한것..
+자바개발자와 협업하는 디자이너...
+
+빈즈태그는 이미 sun에서 정의해 놓은 것이고,
+( <jsp:useBean...
+
+커스텀 태그라고 해서, 자바 개발자가 직접 태그를 정의할 수도 있다..
+<ckeditor
+-------------------------------------------------------------------------------
+코드중복을 방지하기 위해, jsp 코드의 일부를 파일로 단지 분리시켜 놓은것...실행시 분리되었던 
+코드가 다시 재 위치를 찾아감

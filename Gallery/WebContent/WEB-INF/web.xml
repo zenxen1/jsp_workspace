@@ -8,5 +8,13 @@
     <servlet-name>myServlet</servlet-name>
     <url-pattern>/regist</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>mydelete</servlet-name>
+    <servlet-class>com.sds.gallery.servlet.Gallery_delete</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mydelete</servlet-name>
+    <url-pattern>/gallery_delete</url-pattern>
+  </servlet-mapping>
   
 </web-app>

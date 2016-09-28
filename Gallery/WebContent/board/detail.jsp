@@ -1,8 +1,13 @@
+<%@page import="com.sds.gallery.domain.Gallery"%>
+<%@page import="java.util.List"%>
 <%@page import="com.sds.gallery.dao.GalleryDAO"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%!GalleryDAO dao = new GalleryDAO(); %>
 <%
 	request.setCharacterEncoding("utf-8");
+	String gallery_id = request.getParameter("gallery_id");
+	
+	Gallery dto = dao.select(Integer.parseInt(gallery_id));
 	
 
 %>
@@ -34,6 +39,11 @@ border:#C3C3C3 1px solid
 a{text-decoration:none}
 img{border:0px}
 </style>
+<script>
+function gallery_delete(){
+	location.href="/gallery_delete?gallery_id=<%=dto.getGallery_id() %>";
+}
+</script>
 </head>
 <body>
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
@@ -53,19 +63,19 @@ img{border:0px}
             <td>&nbsp;</td>
           </tr>
           <tr id="writer">
-            <td height="25" align="center">작성자</td>
-            <td><input type="text" name="textfield"></td>
+            <td height="25" align="center" >작성자</td>
+            <td><input type="text" name="textfield" value="<%=dto.getWriter() %>"></td>
           </tr>
           <tr id="title">
-            <td height="25" align="center">제목</td>
-            <td><input type="text" name="textfield2"></td>
+            <td height="25" align="center" >제목</td>
+            <td><input type="text" name="textfield2" value="<%=dto.getTitle() %>"></td>
           </tr>
           <tr id="content">
             <td align="center">내용</td>
-            <td><textarea name="content" style=""></textarea></td>
+            <td><textarea name="content" style=""><%=dto.getContent() %></textarea></td>
           </tr>
           <tr>
-            <td>&nbsp;</td>
+            <td><img src="/data/<%=dto.getImg() %>"></td>
             <td>&nbsp;</td>
           </tr>
         </table></td>
@@ -73,7 +83,7 @@ img{border:0px}
   <tr>
     <td height="30" align="right" style="padding-right:2px;">
 	<img src="/board/images/write_btin.gif" width="61" height="20">
-	<img src="/board/images/delete_btn.gif" width="61" height="20"> <a href="list.jsp"><img src="/board/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
+	<img src="/board/images/delete_btn.gif" width="61" height="20" onClick="gallery_delete()"> <a href="list.jsp"><img src="/board/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
   </tr>
   <tr>
     <td height="1" bgcolor="#CCCCCC"></td>

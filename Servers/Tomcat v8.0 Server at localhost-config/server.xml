@@ -92,24 +92,17 @@
 				<!-- Access log processes all example. Documentation at: /docs/config/valve.html 
 					Note: The pattern used is equivalent to using pattern="common" -->
 				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
-				<Context docBase="App0920" path="/App0920" reloadable="true" source="org.eclipse.jst.jee.server:App0920"/>
-				<Context docBase="App0922" path="/App0922" reloadable="true" source="org.eclipse.jst.jee.server:App0922"/>
-				<Context docBase="EmpApp0921" path="/EmpApp0921" reloadable="true" source="org.eclipse.jst.jee.server:EmpApp0921"/>
-				<Context docBase="App0923" path="/App0923" reloadable="true" source="org.eclipse.jst.jee.server:App0923"/>
-				<Context docBase="NoticeBoard" path="/NoticeBoard" reloadable="true" source="org.eclipse.jst.jee.server:NoticeBoard">
+				
+				
+				
+				
+				
 
-					<Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
-
-				</Context>
-
-				<Context docBase="CommentBoard" path="/CommentBoard" reloadable="true" source="org.eclipse.jst.jee.server:CommentBoard">
-
-					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
-
-				</Context>
-				<Context docBase="Gallery" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Gallery">
-					<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
-				</Context>
+				
+				
+			<Context docBase="Gallery" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Gallery">
+			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
+			</Context>
 			</Host>
 		</Engine>
 	</Service>

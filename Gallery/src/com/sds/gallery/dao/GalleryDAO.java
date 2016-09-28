@@ -72,7 +72,7 @@ public class GalleryDAO {
 		return list;
 		
 	}
-	public Gallery selectAll(int gallery_id){
+	public Gallery select(int gallery_id){
 		Connection con=null;
 		PreparedStatement pstmt = null;
 		ResultSet rs=null;
@@ -105,5 +105,24 @@ public class GalleryDAO {
 		}
 		return dto;
 		
+	}
+	
+	public int gallery_delete(int gallery_id){
+		Connection con=null;
+		PreparedStatement pstmt =null;
+		int result = 0;
+		con = pool.getConnection();
+		String sql = "delete from gallery where gallery_id ="+gallery_id;
+		try {
+			pstmt = con.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			pool.freeConnection(con, pstmt);
+		}		
+		return result;
 	}
 }

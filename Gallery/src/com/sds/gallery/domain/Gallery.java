@@ -1,41 +1,19 @@
-/*
- * 이 객체는 로직을 처리하기 위함이 아니라, 오직, 데이터를 담기 위한 용도 이다. DTO
- * */
-package com.sds.board.domain;
+package com.sds.gallery.domain;
 
-import java.util.ArrayList;
-
-import com.sds.comments.domain.Comments;
-
-public class Board {
-	private int board_id;
+public class Gallery {
+	private int gallery_id;
 	private String writer;
 	private String title;
 	private String regdate;
 	private int hit;
 	private String content;
-	//private int re;
-	private ArrayList<Comments> commentsList;
+	private String img;
 	
-	public ArrayList<Comments> getCommentsList() {
-		return commentsList;
+	public int getGallery_id() {
+		return gallery_id;
 	}
-	public void setCommentsList(ArrayList<Comments> commentsList) {
-		this.commentsList = commentsList;
-	}
-	/*
-	public int getRe() {
-		return re;
-	}
-	public void setRe(int re) {
-		this.re = re;
-	}
-	*/
-	public int getBoard_id() {
-		return board_id;
-	}
-	public void setBoard_id(int board_id) {
-		this.board_id = board_id;
+	public void setGallery_id(int gallery_id) {
+		this.gallery_id = gallery_id;
 	}
 	public String getWriter() {
 		return writer;
@@ -67,9 +45,13 @@ public class Board {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	
 	
-	
-
 
 }

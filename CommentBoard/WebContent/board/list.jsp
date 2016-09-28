@@ -1,10 +1,24 @@
+<%@page import="com.sds.comments.domain.Comments"%>
 <%@page import="com.sds.board.domain.Board"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sds.board.dao.BoardDAO"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%!BoardDAO dao = new BoardDAO(); %>
 <%
-	List<Board> list = dao.selectAll();
+	//검색일 경우 파라미터값 넘겨받기!!
+	request.setCharacterEncoding("utf-8");
+	String category = request.getParameter("category");
+	String keyword = request.getParameter("keyword");
+	
+	List<Board> list = null;
+	if(keyword!=null){
+		//out.print("select * from board where "+category+" like '%"+keyword+"%'");
+		list=dao.selectAll(keyword, category);
+	}else{
+		list=dao.selectAll();
+	}
+
+	//List<Board> list = dao.selectAll();
 
 	int currentPage=1;
 	if(request.getParameter("currentPage")!=null){
@@ -44,6 +58,13 @@
 a{text-decoration:none}
 img{border:0px}
 </style>
+<script>
+function searchBoard(){
+	//검색폼의 값을 list.jsp로 전송하자!!
+	form1.action="/board/list.jsp";
+	form1.submit();
+}
+</script>
 </head>
 <body>
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
@@ -71,7 +92,14 @@ img{border:0px}
 		    <%Board dto = list.get(curPos++);%>
 		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
 			  <td width="50"><%=num-- %></td>
-			  <td width="303"><a href="detail.jsp?board_id=<%=dto.getBoard_id()%>"><%=dto.getTitle() %></a>[<%=dto.getRe() %>]</td>
+			  <td width="303"><a href="detail.jsp?board_id=<%=dto.getBoard_id()%>">
+			  <%=dto.getTitle() %>
+			  <%List <Comments> commentsList = dto.getCommentsList();%>
+			  	<% if(commentsList !=null){%>
+			 	[<%=commentsList.size() %>]
+			 	<%} %>
+			  </a>
+			  </td>
 			  <td width="100"><%=dto.getWriter() %></td>
 			  <td width="100"><%=dto.getRegdate() %></td>
 			  <td width="50"><%=dto.getHit() %></td>
@@ -92,19 +120,25 @@ img{border:0px}
   </tr>
   <tr>
     <td height="20" colspan="5" align="right" style="padding-right:2px;">
+    
+    
+  <form name="form1" method="post">  
 	<table width="160" border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td width="70">
-          <select name="select" id="category">
-            <option>제목</option>
-            <option>내용</option>
-            <option>글쓴이</option>
+          <select name="category" id="category">
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="writer">글쓴이</option>
           </select>        </td>
         <td width="80">
-          <input name="textfield" id="keyword" type="text" size="15">        </td>
-        <td><img src="/board/images/search_btn.gif" width="32" height="17"></td>
+          <input name="keyword" id="keyword" type="text" size="15">        </td>
+        <td><img src="/board/images/search_btn.gif" width="32" height="17" onClick="searchBoard()"></td>
       </tr>
     </table></td>
+  </form>
+  
+  
   </tr>
   <tr>
     <td height="30" colspan="5" align="right" style="padding-right:2px;"><a href="write.jsp"><img src="/board/images/write_btin.gif" width="61" height="20" border="0"></a></td>

@@ -1,19 +1,10 @@
-<%@page import="com.sds.comments.domain.Comments"%>
-<%@page import="java.util.List"%>
-<%@page import="com.sds.comments.dao.CommentsDAO"%>
-<%@page import="com.sds.board.dao.BoardDAO"%>
-<%@page import="com.sds.board.domain.Board"%>
+<%@page import="com.sds.gallery.dao.GalleryDAO"%>
 <%@ page contentType="text/html;charset=utf-8"%>
-<%! 
-BoardDAO dao = new BoardDAO(); 
-CommentsDAO cdao = new CommentsDAO();
-%>
+<%!GalleryDAO dao = new GalleryDAO(); %>
 <%
-	String board_id = request.getParameter("board_id");
-	Board dto = dao.select(Integer.parseInt(board_id));
-	dao.updateHit(Integer.parseInt(board_id));
+	request.setCharacterEncoding("utf-8");
 	
-	List <Comments> list = cdao.selectAll(Integer.parseInt(board_id));
+
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -43,24 +34,6 @@ border:#C3C3C3 1px solid
 a{text-decoration:none}
 img{border:0px}
 </style>
-<script>
-function regist(){
-	//댓글등록요청을 하자
-	if(form2.writer.value==""){
-		alert("댓글 작성자를 입력하세요!!!");
-		form2.writer.focus();
-		return;
-	}
-	if(form2.title.value==""){
-		alert("댓글을 입력하세요");
-		form2.title.focus();
-		return;
-	}
-	form2.action ="/board/comments_regist.jsp?board_id=<%=dto.getBoard_id()%>"
-	form2.submit();
-	
-}
-</script>
 </head>
 <body>
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
@@ -73,27 +46,23 @@ function regist(){
   <tr>
     <td height="1" bgcolor="#CCCCCC"></td>
   </tr>
-  
-  <form name="form1" method="post">
 	<tr>	
 		<td id="list"><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="100">&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
-          
-          
           <tr id="writer">
             <td height="25" align="center">작성자</td>
-            <td><input type="text" name="textfield" value=<%=dto.getWriter() %>></td>
+            <td><input type="text" name="textfield"></td>
           </tr>
           <tr id="title">
             <td height="25" align="center">제목</td>
-            <td><input type="text" name="textfield2" value=<%=dto.getTitle() %>></td>
+            <td><input type="text" name="textfield2"></td>
           </tr>
           <tr id="content">
             <td align="center">내용</td>
-            <td><textarea name="content" style=""><%=dto.getContent() %></textarea></td>
+            <td><textarea name="content" style=""></textarea></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -106,38 +75,6 @@ function regist(){
 	<img src="/board/images/write_btin.gif" width="61" height="20">
 	<img src="/board/images/delete_btn.gif" width="61" height="20"> <a href="list.jsp"><img src="/board/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
   </tr>
- </form> 
-  
-  <!-- 댓글영역 시작 -->
-  <form name="form2" method="post">
-  <tr>
-  <td align="center">
-  <input type="text"  size="5" name="writer">
-  <input type="text"  size="70" name="title">
-  <input type="button" value="등록" onClick="regist()">
-  </td>
-  </tr>
-  
-  <tr>
-  	<td>
-  		<!-- 목록을 보여줄 테이블 begin -->
-  			<table width="100%" border="1px">
-  			<%for(int i=0;i<list.size();i++){ %>
-  			<%Comments comments=list.get(i); %>
-  			<tr>
-  				<td><%=comments.getWriter() %></td>
-  				<td><%=comments.getTitle() %></td>
-  				<td><%=comments.getRegdate().substring(0,10) %></td>
-  			</tr>
-  			<%} %>
-  			
-  			</table>
-  		<!-- 목록을 보여줄 테이블 end -->
-  	
-  	</td>
-  </tr>
-  </form>
-  <!-- 댓글영역 끝 -->
   <tr>
     <td height="1" bgcolor="#CCCCCC"></td>
   </tr>

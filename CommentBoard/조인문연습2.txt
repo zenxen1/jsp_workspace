@@ -1,0 +1,18 @@
+--부서 변호별 사원수를 출력
+select deptno from emp group by deptno;
+select deptno,count(empno) from emp group by deptno;
+--부서명별 사원수 출력
+select d.dname,count(empno) from emp e, dept d where e.deptno=d.deptno group by d.dname;
+--outer 조인
+select d.dname,count(empno) from dept d LEFT outer JOIN emp e on e.deptno=d.deptno 
+group by d.dname;
+
+select b.title as title, b.writer, b.regdate, hit,count(comments_id) as re
+from board b left outer join comments c
+on b.board_id= c.board_id
+group by b.title, b.writer, b.regdate, hit
+having b.title like '%ㅋ%';
+
+--그룹바이일떄는 해빙을 쓴다
+--검색
+select * from board where title like '%ㅋ%';

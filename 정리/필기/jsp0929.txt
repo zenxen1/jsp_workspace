@@ -1,0 +1,16 @@
+업로드 컴포넌트(유,무)
+-Oreilly사
+cos.jar MultipartRequest
+
+-Apache.org
+commons fileupload
+	 io
+-Thumnail
+ JAI
+ 원본을 원하는 크기로 그려냄.....
+ BufferedImage --> 파일 아니다!! 메모리에 올라온 그래픽객체...따라서 그래픽처리가
+끝난후, 파일로 저장...
+ImageIO.read(File 객체) - 파일 읽을때
+ImageIO.write(File 객체) - 파일 저장시
+-----------------------------------------------------------------------------------------
+답변게시판 (계층형 게시판)

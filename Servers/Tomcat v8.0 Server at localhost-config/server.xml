@@ -103,7 +103,10 @@
 			<Context docBase="Gallery" path="/Gallery" reloadable="true" source="org.eclipse.jst.jee.server:Gallery">
 			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
 			</Context>
-			<Context docBase="AsyncApp" path="/" reloadable="true" source="org.eclipse.jst.jee.server:AsyncApp">
+			<Context docBase="AsyncApp" path="/AsyncApp" reloadable="true" source="org.eclipse.jst.jee.server:AsyncApp">
+			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
+			</Context>
+			<Context docBase="DataMigration" path="/" reloadable="true" source="org.eclipse.jst.jee.server:DataMigration">
 			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
 			</Context>
 			</Host>

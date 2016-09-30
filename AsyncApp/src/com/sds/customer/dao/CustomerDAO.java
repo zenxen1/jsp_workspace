@@ -103,28 +103,40 @@ public class CustomerDAO {
 		
 	}
 	
-	public void postSerch(){
+	public List postSerch(String gugun){
 		Connection con=null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		ArrayList<zipcode> list = new ArrayList<>();
 		
 		con = pool.getConnection();
-		String sql = "select * from post where dong like '%±¸%'";
+		String sql = "select * from post where dong like '%"+gugun+"%'";
+		System.out.println(sql);
 		try {
 			pstmt = con.prepareStatement(sql);
+			//pstmt.setString(1, gugun);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
 				zipcode dto = new zipcode();
-				dto.setBunji(rs.getString("bunji");
-				dto.setDong(rs.getString("dong");
-				dto.setGugun(rs.getString("gugun");
-				dto.setSeq(seq);
+				
+				dto.setBunji(rs.getString("bunji"));
+				dto.setDong(rs.getString("dong"));
+				dto.setGugun(rs.getString("gugun"));
+				dto.setSeq(rs.getInt("seq"));
+				dto.setSido(rs.getString("sido"));
+				dto.setZipcode(rs.getString("zipcode"));
+				
+				list.add(dto);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			pool.freeConnection(con, pstmt);
 		}
+		return list;
+		
 	}
 	
 	

@@ -20,36 +20,35 @@ function getHttp(){
 
 function zipSerch(){
 var xhttp=getHttp();
-	/*
+
 	xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
         	//alert(xhttp.responseText);
         	//div안에 동적으로 컨텐츠를 구성해 보자!1
         	var text = xhttp.responseText;
         	var obj = JSON.parse(text);
+        	alert(obj);
         	
         	
         	
-        	var customerList = document.getElementById("customerList");
+        	var postList = document.getElementById("postList");
         	var tag = "<table border=\"1px\">";
-        	for(var i=0;i<obj.customerList.length;i++){
+        	for(var i=0;i<obj.postList.length;i++){
         	tag = tag +"<tr>";
-        	tag = tag +"<td>"+obj.customerList[i].customer_id+"</td>";
-        	tag = tag +"<td>"+obj.customerList[i].id+"</td>";
-        	tag = tag +"<td>"+obj.customerList[i].password+"</td>";
-        	tag = tag +"<td>"+obj.customerList[i].zipcode1+"</td>";
-        	tag = tag +"<td>"+obj.customerList[i].zipcode2+"</td>";
-        	tag = tag +"<td>"+obj.customerList[i].addr1+"</td>";
-        	tag = tag +"<td>"+obj.customerList[i].addr2+"</td>";
-        	tag = tag +"<td>"+obj.customerList[i].regdate+"</td>";
+        	tag = tag +"<td>"+obj.postList[i].bunji+"</td>";
+        	tag = tag +"<td>"+obj.postList[i].dong+"</td>";
+        	tag = tag +"<td>"+obj.postList[i].gugun+"</td>";
+        	tag = tag +"<td>"+obj.postList[i].seq+"</td>";
+        	tag = tag +"<td>"+obj.postList[i].sido+"</td>";
+        	tag = tag +"<td>"+obj.postList[i].zipcode+"</td>";
         	tag = tag +"</tr>";
         	}
         	tag = tag +"</table>";
-        	customerList.innerHTML=tag;
+        	post.innerHTML=tag;
         }
     };
 	
-	*/
+
 	xhttp.open("get","/customer/post.jsp?dong="+form1.dong.value,true);
 	xhttp.send();
 }
@@ -63,10 +62,11 @@ var xhttp=getHttp();
 	<input type="button" value="검색" onClick="zipSerch()">
 	<table>
 	<tr>
-		<td><a href="">우편호</a></td>
+		<td><a href="">우편번호</a></td>
 	</tr>
 	</table>
 </pre>
 </form>
+<div id="postList"></div>
 </body>
 </html>

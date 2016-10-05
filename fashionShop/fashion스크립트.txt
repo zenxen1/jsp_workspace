@@ -1,0 +1,80 @@
+--테이블 스페이스 생성
+create tablespace fashion datafile 'C:\oraclexe\app\oracle\oradata\XE\fashion.dbf' size 20m;
+
+--user 생성
+create user fashion
+identified by fashion
+default tablespace fashion
+quota unlimited on fashion;
+
+--접속권한, 테이블에 권한, 시퀀스 생성 권한 부여
+grant create session,
+create table,
+create sequence to fashion;
+
+create table topcategory(
+	top_id number primary key
+	,title varchar2(30)
+	,rank number default 0	
+);
+
+create sequence seq_topcategory
+increment by 1
+start with 1;
+
+create table subcategory(
+	sub_id number primary key
+	,top_id number
+	,title varchar2(30)
+	,rank number default 0
+);
+
+create sequence seq_subcategory
+increment by 1
+start with 1;
+
+insert into topcategory (top_id,title) values (seq_topcategory.nextval,'상의');
+insert into topcategory (top_id,title) values (seq_topcategory.nextval,'하의');
+insert into topcategory (top_id,title) values (seq_topcategory.nextval,'신발');
+insert into topcategory (top_id,title) values (seq_topcategory.nextval,'액세서리');
+insert into topcategory (top_id,title) values (seq_topcategory.nextval,'액세서리');
+
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,1,'점퍼');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,1,'가디건');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,1,'티셔츠');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,1,'코트');
+
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,2,'청바지');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,2,'스커트');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,2,'반바지');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,2,'면바지');
+
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,3,'구두');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,3,'운동화');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,3,'슬리퍼');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,3,'샌들');
+
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,4,'반지');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,4,'귀걸이');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,4,'목걸이');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,4,'팔찌');
+
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,5,'장갑');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,5,'점퍼');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,5,'벨트');
+insert into subcategory (sub_id,top_id,title) values (seq_subcategory.nextval,5,'지갑');
+
+create table admin(
+admin_id number primary key
+,id varchar2(20)
+,password varchar2(20)
+,name varchar2(20)
+);
+
+select * from admin where id='batman' and password='1111';
+select * from subcategory where top_id =1 order by rank asc;
+
+
+
+
+commit;

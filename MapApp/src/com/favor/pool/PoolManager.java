@@ -2,7 +2,7 @@
  * 우리의 경우)jdbc/oracle이 검색 키워드이다!!
  * */
 
-package com.fashion.mypool;
+package com.favor.pool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

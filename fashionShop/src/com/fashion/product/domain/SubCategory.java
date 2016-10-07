@@ -1,15 +1,22 @@
 package com.fashion.product.domain;
 
 public class SubCategory {
-	private int rank;
-	private String title;
+	private int sub_id;
 	private int top_id;
+	private String title;
+	private int rank;
 	
-	public int getRank() {
-		return rank;
+	public int getSub_id() {
+		return sub_id;
 	}
-	public void setRank(int rank) {
-		this.rank = rank;
+	public void setSub_id(int sub_id) {
+		this.sub_id = sub_id;
+	}
+	public int getTop_id() {
+		return top_id;
+	}
+	public void setTop_id(int top_id) {
+		this.top_id = top_id;
 	}
 	public String getTitle() {
 		return title;
@@ -17,11 +24,11 @@ public class SubCategory {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getTop_id() {
-		return top_id;
+	public int getRank() {
+		return rank;
 	}
-	public void setTop_id(int top_id) {
-		this.top_id = top_id;
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 	
 	

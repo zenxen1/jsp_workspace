@@ -1,0 +1,28 @@
+/*
+ * 
+ * */
+package com.fashion.product.mybatis.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.fashion.mybatis.SessionManager;
+import com.fashion.product.domain.Product;
+	
+public class ProductDAO {
+	SessionManager manager = SessionManager.getInstance();
+	public int insert(Product dto){
+		int result=0;
+		return result;
+	}
+	
+	public List selectAll(){
+		SqlSession session = manager.getSession();
+		List list = null;
+		
+		list = (List)session.selectList("com.fashion.product.domain.Product.selectAll");
+		session.close();
+		return list;
+	}
+}

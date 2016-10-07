@@ -1,0 +1,13 @@
+(구버전 : apache)
+ibatis / mybatis 5일 과정
+
+틀 + 업무 = 업무의 틀을 의미!!
+frame + work
+=개발자를 위해 이미 만들어진 업무틀 
+틀이라는 기준하에 기준을 마련하였으므로 유지 보수성이 높다...
+
+라면 = 일일 직접 만듦
+컴라면 = 이미 만들어져 있다..
+
+
+Pregentation Layer          Business Layer        Persistence Layer

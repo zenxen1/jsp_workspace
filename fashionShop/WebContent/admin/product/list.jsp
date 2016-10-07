@@ -1,4 +1,20 @@
+<%@page import="com.fashion.common.file.FileManager"%>
+<%@page import="com.fashion.product.domain.Product"%>
+<%@page import="com.fashion.common.board.PagingManager"%>
+<%@page import="java.util.List"%>
+<%@page import="com.fashion.product.mybatis.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<%!
+	ProductDAO productDAO = new ProductDAO();
+	PagingManager pm=new PagingManager();
+%>
+<%
+	List<Product> list=productDAO.selectAll(); 
+	out.print(list.size());
+	request.setAttribute("list", list);
+	
+	pm.init(request);
+%>
 <html>
 <head>
 <title></title>
@@ -50,6 +66,30 @@ td{font-size:9pt}
 	    </tr>
     <tr><td colspan="12" height="1" bgcolor="#CCCCCC"></td>
 	</tr>
+	<%
+		int num=pm.getNum();
+		int curPos=pm.getCurPos();
+	%>
+	<%for(int i=1;i<=pm.getPageSize();i++){ %>
+	<%if(num <1)break; %>
+	<%Product dto=list.get(curPos++);%>
+	<tr>
+		<td><input type="checkbox"></td>
+		<td><%=num--%></td>
+		<td>
+			<img src="/product/<%=dto.getProduct_id()%>.<%=FileManager.getExt(dto.getImg())%>" width="40px">
+		</td>
+		<td><%=dto.getProduct_name() %></td>
+		<td><%=dto.getPrice() %></td>
+		<td><%=dto.getDiscount() %></td>
+		<td><%=dto.getColor() %></td>
+		<td><%=dto.getPsize() %></td>
+		<td><%=dto.getNation() %></td>
+		<td><%=dto.getBrand() %></td>
+		<td><%=dto.getStock() %></td>
+		<td><%=dto.getPoint() %></td>
+	</tr>
+	<%} %>
 	  <tr>
         <td colspan="12" height="5" bgcolor="#BBBBBB"></td>
       </tr>

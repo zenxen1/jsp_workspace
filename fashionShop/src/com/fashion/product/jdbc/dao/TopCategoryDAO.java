@@ -1,4 +1,4 @@
-package com.fashion.product.dao;
+package com.fashion.product.jdbc.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fashion.mypool.PoolManager;
+import com.fashion.pool.PoolManager;
 import com.fashion.product.domain.TopCategory;
 
 public class TopCategoryDAO {

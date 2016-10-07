@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.fashion.admin.domain.Admin;
-import com.fashion.mypool.PoolManager;
+import com.fashion.pool.PoolManager;
 
 public class AdminDAO {
 	PoolManager pool = PoolManager.getInstance();

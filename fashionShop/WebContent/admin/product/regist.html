@@ -8,6 +8,9 @@
 	.style1 {font-weight: bold}
 	.style2 {font-weight: bold}
 -->
+.numAlign{
+	text-align:right;
+}
 </style>
 <script language="javascript">
 var flag="n";
@@ -90,7 +93,6 @@ function preView(){
 <body leftmargin="50" topmargin="0" marginwidth="0" marginheight="0">
 <table width="650" border="0" cellpadding="0" cellspacing="0">
 <form method="post" enctype="multipart/form-data" name="form1">
-<input type="hidden" name="userFileName">
 <tr>
 	<td>&nbsp;</td>
 </tr>
@@ -147,19 +149,19 @@ function preView(){
         <tr id="bank_id" >
           <td>판매 가격</td>
           <td><span class="pd_l10">
-            <input name="price" type="text" id="price" style="width:120px" maxlength="9">
+            <input name="price" type="text" id="price" style="width:120px" maxlength="9" value="0" class="numAlign">
           </span></td>
         </tr>
         <tr id="bank_id" >
           <td>할인가격</td>
           <td><span class="pd_l10">
-            <input name="discount" type="text" id="discount" style="width:120px" maxlength="9">
+            <input name="discount" type="text" id="discount" style="width:120px" maxlength="9" value="0" class="numAlign">
           </span></td>
         </tr>
         <tr id="bank_id" >
           <td>적립율</td>
           <td><span class="pd_l10">
-            <input name="ratio" type="text" id="ratio" style="width:120px" maxlength="9">
+            <input name="ratio" type="text" id="ratio" style="width:120px" value="0" class="numAlign">
           %</span></td>
         </tr>
         <tr id="bank_id" >
@@ -182,7 +184,7 @@ function preView(){
         </tr>
         <tr id="bank_id" >
           <td>상품 이미지 </td>
-          <td><input type="file" name="filename" onChange="preView()"></td>
+          <td><input type="file" name="myFile" ></td>
         </tr>
         
         <tr> 

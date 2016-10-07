@@ -1,62 +1,89 @@
-<%@ page contentType="text/html;charset=euc-kr"%>
-<%@ page import="model.manager.*"%>
-<%@ page import="model.formbean.*"%>
-<%@ page import="com.oreilly.servlet.*"%>
-<%@ page import="java.io.*"%>
-<%request.setCharacterEncoding("euc-kr");%>
+<%@page import="com.fashion.common.file.FileManager"%>
+<%@page import="com.fashion.product.jdbc.dao.ProductDAO"%>
+<%@page import="com.fashion.product.domain.Product"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="java.util.List"%>
+<%@page import="java.io.File"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@ page contentType="text/html;charset=utf-8"%>
+<%@ include file="/inc/message.jsp" %>
 <%!
-MultipartRequest multi;
-%>
+	DiskFileItemFactory factory=new DiskFileItemFactory();
+	ServletFileUpload upload=new ServletFileUpload(factory);
+	File saveFile;	
+	ProductDAO dao = new ProductDAO();
+%>    
 <%
-	//1 ÆÄÀÏ¾÷·Îµå ÄÄÆ÷³ÍÆ® »ı¼º 
-	String saveDirectory=application.getRealPath("/upload");
-	int maxSize=1024*1024*2;//2m
-	String encoding="euc-kr";
-	multi=new MultipartRequest(request,saveDirectory,maxSize,encoding);
-	String productname=multi.getParameter("productname");
-	String gender=multi.getParameter("gender");
-	String category1=multi.getParameter("category1");
-	String category2=multi.getParameter("category2");
-	String brand=multi.getParameter("brand");
-	String nation=multi.getParameter("nation");
-	String price=multi.getParameter("price");
-	String discount=multi.getParameter("discount");
-	String point=multi.getParameter("point");
-	String memo=multi.getParameter("memo");
-	String psize=multi.getParameter("psize");
-	String color=multi.getParameter("color");
-	String stock=multi.getParameter("stock");
-	String detail=multi.getParameter("detail");
-	String fileType=multi.getParameter("fileType");//È®ÀåÀÚ Ãß°¡
-	ProductManager pm=new ProductManager();
-	ProductBean pb=new ProductBean();
-	pb.setProductname(productname);
-	pb.setGender(gender);
-	pb.setCategory1(Integer.parseInt(category1));
-	pb.setCategory2(Integer.parseInt(category2));
-	pb.setBrand(brand);
-	pb.setNation(nation);
-	pb.setPrice(Integer.parseInt(price));
-	pb.setDiscount(Integer.parseInt(discount));
-	pb.setPoint(Integer.parseInt(point));
-	pb.setMemo(memo);
-	pb.setPsize(psize);
-	pb.setColor(color);
-	pb.setStock(Integer.parseInt(stock));
-	pb.setDetail(detail);
-	pb.setFileType(fileType);
-	if(pm.executeInsert(pb)){
-		out.print("µ¥ÀÌÅÍ ÀÔ·Â ¼º°ø!!");
-		File file=multi.getFile("filename");
-		File destFile=new File(saveDirectory+"/P"+pm.getProductCode()+"."+fileType);// º¹»ç¿ëµµ (´Ù½Ã ÀÌ¸§À» ÁöÁ¤ÇÏ±âÀ§ÇÔ)
-		file.renameTo(destFile);
-		response.sendRedirect("/admin/product/list.jsp");
-	}
-%>
+    	request.setCharacterEncoding("utf-8");
 
+    	String tempPath=application.getRealPath("/temp");
+    	String realPath=application.getRealPath("/product/");
+    	
+    	System.out.print(realPath);
+    	
+    	factory.setSizeThreshold(1*1024*1024);
+    	factory.setRepository(new File(tempPath));
+    	
+    	//íŒŒë¼ë¯¸í„° ë„˜ê²¨ë°›ì•„ ì—…ë¡œë“œ ë° db ì— ë„£ì!!!
+    	List<FileItem> list=upload.parseRequest(request); //ë¶„ì„ ì‹œì‘!!!
+    	
+    	Product dto = new Product();
+    	
+    	for(int i=0;i<list.size();i++){
+    		FileItem item=list.get(i);
+    		
+	   		if(item.isFormField()){//text ê¸°ë°˜ íŒŒë¼ë¯¸í„°..
+    		System.out.println(item.getString("utf-8"));
 
-
-
+	   		if(item.getFieldName().equals("sub_id")){
+			   		dto.setSub_id(Integer.parseInt(item.getString()));
+			   	}else if(item.getFieldName().equals("product_name")){
+			   		dto.setProduct_name(item.getString("utf-8"));
+			   	}else if(item.getFieldName().equals("gender")){
+			   		dto.setGender(item.getString("utf-8"));
+			   	}else if(item.getFieldName().equals("brand")){
+			   		dto.setBrand(item.getString("utf-8"));
+			   	}else if(item.getFieldName().equals("nation")){
+			   		dto.setNation(item.getString("utf-8"));
+			   	}else if(item.getFieldName().equals("price")){
+			   		dto.setPrice(Integer.parseInt(item.getString()));
+			   	}else if(item.getFieldName().equals("discount")){
+			   		dto.setDiscount(Integer.parseInt(item.getString()));
+			   	}else if(item.getFieldName().equals("point")){
+			   		dto.setPoint(Integer.parseInt(item.getString()));
+			   	}else if(item.getFieldName().equals("memo")){
+			   		dto.setMemo(item.getString("utf-8"));
+			   	}else if(item.getFieldName().equals("psize")){
+			   		dto.setPsize(item.getString("utf-8"));
+			   	}else if(item.getFieldName().equals("color")){
+			   		dto.setColor(item.getString("utf-8"));
+			   	}else if(item.getFieldName().equals("stock")){
+			   		dto.setStock(Integer.parseInt(item.getString()));
+			   	}else if(item.getFieldName().equals("detail")){
+			   		dto.setDetail(item.getString("utf-8"));
+			   	}
+	   		
+	   		}else{//ë°”ì´ë„ˆë¦¬ íŒŒì¼ ê¸°ë°˜ íŒŒë¼ë¯¸í„°...
+		    	dto.setImg(item.getName());
+		    	item.write(saveFile=new File(realPath+item.getName()));
+		    	item.delete();
+	   		}
+    		
+    	}
+    	//dbì— ë„£ì!
+    	int result = dao.insert(dto);
+    	
+    	//íŒŒì¼ëª… ë°”ê¾¸ê¸°
+    	String ext = FileManager.getExt(saveFile.getName());
+    	saveFile.renameTo(new File(realPath+result+"."+ext));
+    	
+    	if (result != 0) {
+    		out.print(showMsgURL("ë“±ë¡ì™„ë£Œ", "/admin/product/regist.jsp"));
+    	} else {
+    		out.print(showMsgBACK("ë“±ë¡ì‹¤íŒ¨"));
+    	}
+    %>
 
 
 

@@ -25,4 +25,19 @@ public class ProductDAO {
 		session.close();
 		return list;
 	}
+	
+	public List selectBySubId(int sub_id){
+		SqlSession session = manager.getSession();
+		List list =(List)session.selectList("Product.selectBySubId", sub_id);
+		session.close();
+		return list;
+	}
+	
+	public Product select(int product_id){
+		SqlSession session = manager.getSession();
+		Product product=session.selectOne("Product.select", product_id);
+		session.close();
+		
+	return product;	
+	}
 }

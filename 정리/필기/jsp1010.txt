@@ -1,0 +1,11 @@
+최신 시퀀스 가져오기
+----------------------------------------
+select seq_product.currval from dual;
+----------------------------------------
+
+------------------------------------------
+Persistence Framework
+-mybatis : SQL Mapper 
+-Hybernate : ORMappering Framework
+------------------------------------------
+ 

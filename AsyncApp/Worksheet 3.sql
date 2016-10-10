@@ -1,13 +1,10 @@
-create table favor(
-favor_id number primary key
-,lati number
-,lng number
-,name VARCHAR2(30)
-,img varchar2(20)
-,content CLOB
-,score number default 0
+CREATE TABLE comments
+(
+   comments_id   NUMBER PRIMARY KEY,
+   product_id    NUMBER,
+   title         VARCHAR2 (100),
+   writer        VARCHAR2 (20),
+   regdate       DATE DEFAULT SYSDATE
 );
 
-create sequence seq_favor
-increment by 1
-start with 1;
+CREATE SEQUENCE seq_comments INCREMENT BY 1 START WITH 1;

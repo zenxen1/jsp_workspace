@@ -1,5 +1,5 @@
 <%@page import="com.fashion.product.mybatis.dao.CommentsDAO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="dto" class="com.fashion.product.domain.Comments"/>
 <%! CommentsDAO dao = new CommentsDAO();%>

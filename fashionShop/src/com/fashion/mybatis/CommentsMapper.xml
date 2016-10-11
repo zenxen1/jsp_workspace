@@ -10,4 +10,8 @@
   values(seq_comments.nextval,#{product_id},#{title},#{writer})
   </insert>
   
+  <select id="selectAll" parameterType="int" resultType="Comments">
+  select * from comments where product_id = #{product_id} order by comments_id desc
+  </select>
+  
 </mapper>

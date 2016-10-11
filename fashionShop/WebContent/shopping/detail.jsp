@@ -4,6 +4,9 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%! ProductDAO productDAO = new ProductDAO(); %>
 <%
+	
+
+
 	int product_id=0;
 	if(request.getParameter("product_id")!=null){
 		product_id=Integer.parseInt(request.getParameter("product_id"));
@@ -31,6 +34,12 @@ body {
 .style2 {color: #FF00FF}
 
 -->
+#comments{
+	width =100%;
+	background : yellow;
+	height : 300px;
+	overflow:scroll;
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -43,8 +52,73 @@ function regist(){
 			       writer:form2.writer.value
 			    },
 			    function(data, status){
-			        alert("Data: " + data + "\nStatus: " + status);
+			        //alert("Data: " + data + "\nStatus: " + status);
+			        
+			       // alert(data.result);
+			        if(data.result==1){
+			        	printComments();
+			        }
 			    });
+}
+function printComments(){
+	//서버에 게시물을 요청하되, 비동기로 요청하자!!!
+	$.get("/comments/list.jsp?product_id=<%=product_id%>",function(data,status){
+		var commentsList = document.getElementById("comments");
+		var tag = "<table width=\"100%\" border=\"1px\">";
+		tag+="<tr>";
+		tag+="<td width=\"70%\">제목</td>";
+		tag+="<td width=\"10%\">작성자</td>";
+		tag+="<td width=\"20%\">작성일</td>";
+		tag+="</tr>";
+		for(var i=0;i<data.commentsList.length;i++){
+		tag+="<tr>";
+		tag+="<td width=\"70%\">"+data.commentsList[i].title+"</td>";
+		tag+="<td width=\"10%\">"+data.commentsList[i].writer+"</td>";
+		tag+="<td width=\"20%\">"+data.commentsList[i].regdate+"</td>";
+		tag+="</tr>";
+		}
+		tag+= "</table>"
+		
+		commentsList.innerHTML=tag;
+		
+		
+		//alert(data.commentsList.length);
+		
+	});
+	
+}
+
+$(document).ready(function(){
+	printComments();
+	//alert("문서로드됐어?");
+});
+
+function inputCart(){
+	if(form1.psize.value==""){
+		alert("사이즈를 선택하세요!!");
+		return;
+	}
+	if(form1.color.value==""){
+		alert("색상을 선택하세요");
+		return;
+	}
+	
+	
+	$.post("/shopping/input_cart.jsp",{
+		product_id:<%=productDTO.getProduct_id()%>,
+		product_name:"<%=productDTO.getProduct_name()%>",
+		color:form1.color.value,
+		psize:form1.psize.value,
+		discount:<%=productDTO.getDiscount()%>,
+		stock:form1.ea.value,
+		img:"<%=productDTO.getImg()%>",
+		price:<%=productDTO.getPrice()%>
+				
+	},function(data,status){
+		if(confirm(data+"\n"+"장바구니로 이동하시겠어요?")){
+			location.href="/shopping/cart.jsp";
+		}
+	});
 }
 </script>
 </head>
@@ -101,7 +175,11 @@ function regist(){
                 <td width="731" height="102" valign="top"background="images/main_bg05.gif" style="padding-top:10px;"><img src="/images/detail/detail_tltle.gif" width="731" height="67" /></td>
               </tr>
               <tr>
-                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <td>
+                
+                <!-- 상세보기 시작 -->
+                <form name="form1" method="post">
+                <table width="100%" border="3" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="5" rowspan="2" valign="top"><img src="/images/detail/detail_bg01.gif" width="5" height="25" /></td>
                       <td width="690"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -116,7 +194,8 @@ function regist(){
                                 </tr>
                             </table></td>
                             <td width="19"></td>
-                            <td width="370" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <td width="370" valign="top">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                   <td width="100" height="46" valign="top" style="padding-left:20px; padding-top:10px;"><span class="style1"><%=productDTO.getProduct_name() %></span></td>
                                   <td width="269" valign="top"></td>
@@ -148,21 +227,21 @@ function regist(){
                                 </tr>
                                 <tr>
                                   <td height="24" valign="top"><img src="/images/detail/img_size.gif" width="51" height="12" /></td>
-                                  <td valign="top"><select name="select">
-                                      <option><%=productDTO.getPsize() %></option>
+                                  <td valign="top"><select name="psize">
+                                      <option value="<%=productDTO.getPsize() %>"><%=productDTO.getPsize() %></option>
                                     </select>
                                   </td>
                                 </tr>
                                 <tr>
                                   <td height="24" valign="top"><img src="/images/detail/img_color.gif" width="40" height="13" /></td>
-                                  <td valign="top"><select name="select2">
-                                      <option><%=productDTO.getColor() %></option>
+                                  <td valign="top"><select name="color">
+                                      <option value="<%=productDTO.getColor() %>"><%=productDTO.getColor() %></option>
                                   </select></td>
                                 </tr>
                                 <tr>
                                   <td height="24" valign="top"><img src="/images/detail/img_count.gif" width="39" height="13" /></td>
-                                  <td valign="top"><select name="select3">
-                                      <option><%=productDTO.getStock() %></option>
+                                  <td valign="top"><select name="ea">
+                                      <option value="<%=productDTO.getStock() %>"><%=productDTO.getStock() %></option>
                                   </select></td>
                                 </tr>
                                 <tr>
@@ -173,7 +252,7 @@ function regist(){
                                   <a href="step1.html">
 	                                  <img src="/images/detail/detail_btn_buy.gif" width="109" height="23" border="0" />
 	                                  </a>&nbsp;
-	                                  <img src="/images/detail/detail_btn_cart.gif" width="109" height="23" onClick="location.href='/shopping/cart.html'"/>
+	                                  <img src="/images/detail/detail_btn_cart.gif" width="109" height="23" onClick="inputCart()" />
 	                                  &nbsp;
 	                                  <img src="/images/detail/detail_btn_wish.gif" width="109" height="23" />
                                   </td>
@@ -186,7 +265,11 @@ function regist(){
                     <tr>
                       <td height="23"></td>
                     </tr>
-                </table></td>
+                </table>
+                </form>
+                <!-- 상세보기 끝 -->
+                
+                </td>
               </tr>
               <tr>
                 <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -346,112 +429,12 @@ function regist(){
                                                           </table></td>
                                                         </tr>
                                                         <tr>
-                                                          <td valign="top" style="padding-top:10px;"><table width="100%"  border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;">
-                                                            <tr>
-                                                              <td width="30" height="26" align="center"><span style="padding-top:14px;"><img src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_a.gif" /></span></td>
-                                                              <td style="padding-left:7px;"><a href="javascript:__psuToggleMemoView(0);">반스슬립온</a> &nbsp; <img 
-    onclick="__ps_GoodsQA_Delete(24079);" style="cursor:hand;"
-    src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_del.gif" width="11" height="11"  align="absmiddle" /></td>
-                                                              <td width="50" align="center" style="font-size:8pt; color:#909090;">김석찬</td>
-                                                              <td width="40" align="center"><img src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_3.gif" /></td>
-                                                              <td width="80" align="center" style="font-size:8pt; color:#909090;">07-08-13 </td>
-                                                            </tr>
-                                                            <tr id="__ps_GoodsQA_Data_" style="display:none;">
-                                                              <td style="padding:0px;" colspan="5"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                                                                  <tr>
-                                                                    <td>&nbsp;</td>
-                                                                    <td colspan="5" ><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                                                                        <tr>
-                                                                          <td background="/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/line01.gif" height="1"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                          <td style="padding:10px;"> 상혁씨가 신고있는 반스슬립온 사이즈가 몇이에요</td>
-                                                                        </tr>
-                                                                    </table></td>
-                                                                  </tr>
-                                                                  <tr>
-                                                                    <td align="center" valign="top" style="padding-top:14px;"><img src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_a.gif" /></td>
-                                                                    <td colspan="5" ><!-- 관리자 답변내용 -->
-                                                                        <table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                                                                          <tr>
-                                                                            <td background="/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/line01.gif" height="1"></td>
-                                                                          </tr>
-                                                                          <tr>
-                                                                            <td style="padding:10px;" valign="top"><p>안녕하세요 후즈입니다</p>
-                                                                                <br />
-                                                                                <p>이제품은 상혁씨 개인소장이시구여</p>
-                                                                              <br />
-                                                                                <p>싸이즈는 250입니다^^</p>
-                                                                              <br />
-                                                                                <p>좋은 하루 보내세요</p>
-                                                                              <br />
-                                                                                <p>감사합니다</p>
-                                                                              <br />
-                                                                                <p>&nbsp;</p>
-                                                                              <br />
-                                                                                <span class="text02">TK!! (07-08-13 11:16)</span> </td>
-                                                                          </tr>
-                                                                        </table>
-                                                                      <!-- 관리자 답변내용 끝 -->
-                                                                    </td>
-                                                                  </tr>
-                                                              </table></td>
-                                                            </tr>
-                                                          </table>
-                                                            <table width="100%"  border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;">
-                                                              <tr>
-                                                                <td width="30" height="26" align="center"><img src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_q.gif" /></td>
-                                                                <td style="padding-left:7px;"><a href="javascript:__psuToggleMemoView(0);">반스슬립온</a> &nbsp; <img 
-    onclick="__ps_GoodsQA_Delete(24079);" style="cursor:hand;"
-    src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_del.gif" width="11" height="11"  align="absmiddle" /></td>
-                                                                <td width="50" align="center" style="font-size:8pt; color:#909090;">김석찬</td>
-                                                                <td width="40" align="center"><img src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_3.gif" /></td>
-                                                                <td width="80" align="center" style="font-size:8pt; color:#909090;">07-08-13 </td>
-                                                              </tr>
-                                                              <tr id="__ps_GoodsQA_Data_" style="display:none;">
-                                                                <td style="padding:0px;" colspan="5"><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                                                                    <tr>
-                                                                      <td>&nbsp;</td>
-                                                                      <td colspan="5" ><table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                                                                          <tr>
-                                                                            <td background="/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/line01.gif" height="1"></td>
-                                                                          </tr>
-                                                                          <tr>
-                                                                            <td style="padding:10px;"> 상혁씨가 신고있는 반스슬립온 사이즈가 몇이에요</td>
-                                                                          </tr>
-                                                                      </table></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                      <td align="center" valign="top" style="padding-top:14px;"><img src="http://www.who-z.com/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/icon_a.gif" /></td>
-                                                                      <td colspan="5" ><!-- 관리자 답변내용 -->
-                                                                          <table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                                                                            <tr>
-                                                                              <td background="/iPageImages/POINTSHOP_ITEM_GOODSQA/sys_default/line01.gif" height="1"></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                              <td style="padding:10px;" valign="top"><p>안녕하세요 후즈입니다</p>
-                                                                                  <br />
-                                                                                  <p>이제품은 상혁씨 개인소장이시구여</p>
-                                                                                <br />
-                                                                                  <p>싸이즈는 250입니다^^</p>
-                                                                                <br />
-                                                                                  <p>좋은 하루 보내세요</p>
-                                                                                <br />
-                                                                                  <p>감사합니다</p>
-                                                                                <br />
-                                                                                  <p>&nbsp;</p>
-                                                                                <br />
-                                                                                  <span class="text02">TK!! (07-08-13 11:16)</span> </td>
-                                                                            </tr>
-                                                                          </table>
-                                                                        <!-- 관리자 답변내용 끝 -->
-                                                                      </td>
-                                                                    </tr>
-                                                                </table></td>
-                                                              </tr>
-                                                            </table>
-                                                            <!--내용출력 시작-->
-                                                            <!--내용출력 끝--></td>
+                                                          <td valign="top" style="padding-top:10px;">
+                                                          <div id="comments">
+                                                          
+                                                          </div>
+                                                                                          
+                                                           </td>
                                                         </tr>
                                                       </table>
                                                     <!-- 내용끝--></td>

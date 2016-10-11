@@ -1,0 +1,16 @@
+xhhp.open()
+xhttp.requestH
+xhttp.send()
+
+JQuery Ajax
+------------------------
+쉽게 쓰기...
+$.post(인수1,인수2,인수3);
+인수1 - url
+인수2 - 파라미터 결정
+인수3 - 콜백 함수 function(data,stauts){
+}
+
+DDL - 
+DML - insert,update,delete,select commit;---->commit 필요
+DCL - DBA

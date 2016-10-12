@@ -8,6 +8,9 @@
 <typeAlias type="com.fashion.product.domain.TopCategory" alias="TopCategory"/>
 <typeAlias type="com.fashion.product.domain.SubCategory" alias="SubCategory"/>
 <typeAlias type="com.fashion.product.domain.Comments" alias="Comments"/>
+<typeAlias type="com.fashion.member.domain.Member" alias="Member"/>
+<typeAlias type="com.fashion.member.domain.Guest" alias="Guest"/>
+<typeAlias type="com.fashion.shopping.domain.Bank" alias="Bank"/>
 </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -25,5 +28,8 @@
     <mapper resource="com/fashion/mybatis/TopcategoryMapper.xml"/>
     <mapper resource="com/fashion/mybatis/SubcategoryMapper.xml"/>
     <mapper resource="com/fashion/mybatis/CommentsMapper.xml"/>
+    <mapper resource="com/fashion/mybatis/MemberMapper.xml"/>
+     <mapper resource="com/fashion/mybatis/BankMapper.xml"/>
+    <!-- <mapper resource="com/fashion/mybatis/GuestMapper.xml"/> -->
   </mappers>
 </configuration>

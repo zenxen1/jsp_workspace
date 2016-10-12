@@ -21,7 +21,7 @@ public class ProductDAO {
 		SqlSession session = manager.getSession();
 		List list = null;
 		
-		list = (List)session.selectList("com.fashion.product.domain.Product.selectAll");
+		list = (List)session.selectList("Product.selectAll");
 		session.close();
 		return list;
 	}

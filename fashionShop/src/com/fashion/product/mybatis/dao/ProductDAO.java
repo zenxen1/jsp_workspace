@@ -40,4 +40,13 @@ public class ProductDAO {
 		
 	return product;	
 	}
+	
+	public List selectByEventInfoId(int eventinfo_id){
+		SqlSession session = manager.getSession();
+		List list = null;
+		
+		list = (List)session.selectList("Product.selectByEventInfoId",eventinfo_id);
+		session.close();
+		return list;
+	} 
 }

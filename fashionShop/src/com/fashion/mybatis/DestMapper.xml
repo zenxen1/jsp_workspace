@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dest">
+	<insert id="insert" parameterType="Dest">
+		insert into dest(dest_id, dest_name, cell1, cell2, cell3, zip1, zip2, house1, house2, msg, ordersum_id)
+		values(seq_dest, #{dest_name}, #{cell1}, #{cell2}, #{cell3}, #{zip1}, #{zip2}, #{house1}, #{house2}, #{msg}, #{ordersum_id})
+	</insert>
+</mapper>
+ 

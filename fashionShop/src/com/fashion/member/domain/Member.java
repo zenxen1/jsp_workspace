@@ -2,7 +2,7 @@ package com.fashion.member.domain;
 
 public class Member {
 	 private int member_id;
-	 private String ID;
+	 private String id;
 	 private String password;
 	 private String member_name;
 	 private String phone1;
@@ -14,6 +14,7 @@ public class Member {
 	 private String addr1;
 	 private String addr2;
 	 private String regdate;
+	 
 	public int getMember_id() {
 		return member_id;
 	}
@@ -21,10 +22,10 @@ public class Member {
 		this.member_id = member_id;
 	}
 	public String getId() {
-		return ID;
+		return id;
 	}
-	public void setId(String iD) {
-		this.ID = iD;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getPassword() {
 		return password;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Payment">
+  <!-- select 문의 결과 레코드를 dto에 자동으로 맵핑해준다고 하여, SqlMapper라고 한다!! -->
+ <insert id="insert" parameterType="Payment">
+ 	insert into payment (payment_id, totalbuy, totalpay, pay_name, bank_id, ordersum)
+ 	values (seq_payment.nextval,#{totalbuy},#{totalpay},#{pay_name},#{bank_id},#{ordersum}) 
+ </insert> 
+ 
+	  
+</mapper>

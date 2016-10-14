@@ -1,3 +1,5 @@
+<%@page import="com.fashion.product.domain.EventInfo"%>
+<%@page import="com.fashion.product.mybatis.dao.EventInfoDAO"%>
 <%@page import="com.fashion.common.file.FileManager"%>
 <%@page import="com.fashion.product.domain.Product"%>
 <%@page import="com.fashion.common.board.PagingManager"%>
@@ -5,12 +7,27 @@
 <%@page import="com.fashion.product.mybatis.dao.ProductDAO"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%!ProductDAO productDAO = new ProductDAO();
-	PagingManager pm = new PagingManager();%>
+	PagingManager pm = new PagingManager();
+	EventInfoDAO eventInfoDAO = new EventInfoDAO();%>
 <%
-	List<Product> list = productDAO.selectAll();
+	List<Product> list = null;
+String eventinfo_id2 = "0";
+
+if(request.getParameter("eventinfo_id2")!=null){
+	eventinfo_id2 = request.getParameter("eventinfo_id2");
+}
+//System.out.println(eventinfo_id2);
+if(eventinfo_id2 == null || eventinfo_id2.equals("0")){
+	list = productDAO.selectAll();
+}else{
+	System.out.println(eventinfo_id2);
+	list = productDAO.selectByEventInfoId(Integer.parseInt(eventinfo_id2));
+}
 	request.setAttribute("list", list);
 
 	pm.init(request);
+	
+	List<EventInfo> eventInfoList = eventInfoDAO.selectAll();
 %>
 <!DOCTYPE html>
 <html>
@@ -47,29 +64,85 @@ ul.pagination li a.active {
 	border: 1px solid #4CAF50;
 }
 
-ul.pagination li a:hover:not (.active ) {
-	background-color: #ddd;
-}
+ul
+.pagination
+ 
+li
+ 
+a
+:hover
+:not
+ 
+(
+.active
+ 
+)
+{
+background-color
+:
+ 
+#ddd
+;
 
+
+}
 div.center {
 	text-align: center;
 }
 </style>
-<script language="javascript">
-	
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+	function checkAll() {
+		for (var i = 0; i < form1.ch.length; i++) {
+			form1.ch[i].checked = form1.chAll.checked;
+		}
+	}
+
+	var arr = [];
+
+	function registEvent() {
+		arr = new Array();
+
+		for (var i = 0; i < form1.ch.length; i++) {
+			if (form1.ch[i].checked) {
+				arr.push(form1.ch[i].value);
+			}
+		}
+		alert("생성된 arr의 크기는" + arr.length + "값" + arr);
+
+		$.post("/admin/product/regist_event.jsp", {
+			eventinfo_id : form1.eventinfo_id.value,
+			product_id : JSON.stringify(arr)
+		}, function(data, status) {
+			if (data == 1) {
+				alert("이벤트상품이 등록되었습니다.");
+			} else {
+				alert("이벤트상품이 등록 실패.");
+			}
+		});
+	}
+
+	function getList() {
+		form1.action = "/admin/product/list.jsp";
+		form1.submit();
+	}
 </script>
 </head>
 <body leftmargin="10" topmargin="0" marginwidth="0" marginheight="0">
 	<table width="900" border="0" cellpadding="0" cellspacing="0">
-		<form name="form1" method="post" action="/admin/food_deal/list.asp">
+		<form name="form1" method="post">
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
 			<tr valign="middle">
-				<td height="30" align="right"><select name="sellType"
-					style="width: 170px">
-						<option value="">▼ 상품검색</option>
-						<option value="new">기획상품</option>
+				<td height="30" align="right"><select name="eventinfo_id2"
+					onChange="getList()">
+						<option value="0">모두보기</option>
+						<%for(int i=0;i<eventInfoList.size();i++){ %>
+						<%EventInfo eventInfo =  eventInfoList.get(i); %>
+						<option <%if(Integer.parseInt(eventinfo_id2)==eventInfo.getEventinfo_id()){%>selected<%} %> value="<%=eventInfo.getEventinfo_id()%>"><%=eventInfo.getTitle() %></option>
+						<%} %>
 				</select> <img src="/admin/images/bt_search.gif"
 					onClick="sendEventProduct();" style="cursor: hand"></td>
 			</tr>
@@ -118,7 +191,8 @@ div.center {
 							Product dto = list.get(curPos++);
 						%>
 						<tr>
-							<td><input type="checkbox"></td>
+							<td><input type="checkbox" name="ch"
+								value="<%=dto.getProduct_id()%>"></td>
 							<td><%=num--%></td>
 							<td><img
 								src="/product/<%=dto.getProduct_id()%>.<%=FileManager.getExt(dto.getImg())%>"
@@ -156,7 +230,15 @@ div.center {
 						</tr>
 					</table> <!--Paging End-->
 			<tr>
-				<td id="paging" height="20" colspan="5" align="center"></td>
+				<td id="paging" height="20" colspan="5"><select
+					name="eventinfo_id">
+						<option>▼ 이벤트 선택</option>
+						<%for(int i=0;i<eventInfoList.size();i++){ %>
+						<%EventInfo eventInfo =  eventInfoList.get(i); %>
+						<option value="<%=eventInfo.getEventinfo_id()%>"><%=eventInfo.getTitle() %></option>
+						<%} %>
+				</select> <input type="button" value="이벤트 상품 등록" onClick="registEvent()">
+					<input type="button" value="삭제"></td>
 			</tr>
 			</td>
 			</tr>
@@ -168,10 +250,11 @@ div.center {
 								<div class="center">
 									<ul class="pagination">
 										<li><a href="#">«</a></li>
-										
+
 										<%for(int i=pm.getFirstPage();i<=pm.getLastPage();i++){ %>
 										<%if(i > pm.getTotalPage())break; %>
-										<li><a <%if(i==pm.getCurrentPage()){%>class="active"<%}%> href="/admin/product/list.jsp?currentPage=<%=i%>"><%=i%></a></li>
+										<li><a <%if(i==pm.getCurrentPage()){%> class="active"
+											<%}%> href="/admin/product/list.jsp?currentPage=<%=i%>"><%=i%></a></li>
 										<%} %>
 										<li><a href="#">»</a></li>
 									</ul>

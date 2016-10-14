@@ -1,3 +1,4 @@
+<%@page import="com.fashion.member.domain.Guest"%>
 <%@page import="com.fashion.shopping.domain.Payment"%>
 <%@page import="com.fashion.shopping.domain.Dest"%>
 <%@page import="com.fashion.member.domain.Member"%>
@@ -15,16 +16,33 @@
 	String customer_addr1 = request.getParameter("customer_addr1");
 	String customer_addr2 = request.getParameter("customer_addr2");
 	
-	Member member = new Member();
-	member.setMember_name(customer_name);
-	member.setPhone1(customer_tel1);
-	member.setPhone2(customer_tel2);
-	member.setPhone3(customer_tel3);
-	member.setEmail(customer_email);
-	member.setZipcode1(customer_zipcode1);
-	member.setZipcode2(customer_zipcode2);
-	member.setAddr1(customer_addr1);
-	member.setAddr2(customer_addr2);
+	if(session.getAttribute("customer_type").equals("member")){
+		Member member = new Member();
+		member.setMember_name(customer_name);
+		member.setPhone1(customer_tel1);
+		member.setPhone2(customer_tel2);
+		member.setPhone3(customer_tel3);
+		member.setEmail(customer_email);
+		member.setZipcode1(customer_zipcode1);
+		member.setZipcode2(customer_zipcode2);
+		member.setAddr1(customer_addr1);
+		member.setAddr2(customer_addr2);
+		session.setAttribute("customer", member);
+	}else{
+		Guest guest = new Guest();
+		guest.setGuest_name(customer_name);
+		guest.setTel1(customer_tel1);
+		guest.setTel2(customer_tel2);
+		guest.setTel3(customer_tel3);
+		guest.setMail(customer_email);
+		guest.setPost1(customer_zipcode1);
+		guest.setPost2(customer_zipcode2);
+		guest.setHome1(customer_addr1);
+		guest.setHome2(customer_addr2);
+		session.setAttribute("customer", guest);
+		
+		
+	}
 	
 	String dest_name = request.getParameter("dest_name");
 	String dest_tel1 = request.getParameter("dest_tel1");
@@ -58,7 +76,8 @@
 	payment.setBank_id(Integer.parseInt(bank));
 	payment.setPay_name(pay_name);
 	
-	session.setAttribute("customer", member);
+	
+	
 	session.setAttribute("dest", dest);
 	session.setAttribute("payment", payment);
 	

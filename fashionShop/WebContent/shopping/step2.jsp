@@ -1,3 +1,4 @@
+<%@page import="com.fashion.member.domain.Guest"%>
 <%@page import="com.fashion.shopping.domain.Bank"%>
 <%@page import="com.fashion.shopping.mybatis.dao.BankDAO"%>
 <%@page import="com.fashion.common.format.MoneyFormat"%>
@@ -7,7 +8,39 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%! BankDAO bankDAO = new BankDAO(); %>
 <%
-Member customer = (Member)session.getAttribute("customer");
+String customer_name="";
+String tel1="";
+String tel2="";
+String tel3="";
+String email="";
+String zipcode1="",zipcode2="";
+String addr1="",addr2="";
+
+if(session.getAttribute("customer_type").equals("member")){
+	Member customer = (Member)session.getAttribute("customer");
+	customer_name=customer.getMember_name();
+	tel1=customer.getPhone1();
+	tel2=customer.getPhone2();
+	tel3=customer.getPhone3();
+	email=customer.getEmail();
+	zipcode1=customer.getZipcode1();
+	zipcode2=customer.getZipcode2();
+	addr1=customer.getAddr1();
+	addr2=customer.getAddr2();
+	
+}else if(session.getAttribute("customer_type").equals("guest")){
+	Guest customer = (Guest)session.getAttribute("customer");
+	customer_name = customer.getGuest_name();
+	tel1= customer.getTel1();
+	tel2 = customer.getTel2();
+	tel3 = customer.getTel3();
+	email=customer.getMail();
+	zipcode1=customer.getPost1();
+	zipcode2=customer.getPost2();
+	addr1=customer.getHome1();
+	addr2=customer.getHome2();
+	
+}
 Dest dest =(Dest)session.getAttribute("dest");
 Payment payment = (Payment) session.getAttribute("payment");
 Bank bank = bankDAO.select(payment.getBank_id());
@@ -142,7 +175,7 @@ body {
                   <tr>
                     <td height="29">&nbsp;</td>
                     <td valign="middle">총결제금액</td>
-                    <td valign="middle"><span class="style4"><%=MoneyFormat.getResult(payment.getTotalpay()) %>>원</span></td>
+                    <td valign="middle"><span class="style4"><%=MoneyFormat.getResult(payment.getTotalpay()) %>원</span></td>
                   </tr>
                 </table></td>
               </tr>
@@ -166,26 +199,21 @@ body {
               </tr>
               <tr>
                 <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    
                     <tr>
-                      <td width="17" rowspan="4" bgcolor="d6d5d5"></td>
-                      <td width="75" height="33" bgcolor="d6d5d5" style="padding-top:3px;">주문번호 </td>
+                      <td height="30" bgcolor="d6d5d5">주문자명 </td>
                       <td width="45"></td>
-                      <td style="padding-top:3px;"><span class="style2">DHGSDFG00221133</span> (주문번호를 메모해 두세요)</td>
-                    </tr>
-                    <tr>
-                      <td height="30" bgcolor="d6d5d5">보내시는 분 </td>
-                      <td width="45"></td>
-                      <td>홍길동</td>
+                      <td><%=customer_name %></td>
                     </tr>
                     <tr>
                       <td height="30" bgcolor="d6d5d5">핸드폰번호</td>
                       <td width="45"></td>
-                      <td>011-111-1111</td>
+                      <td><%=tel1%>-<%=tel2 %>-<%=tel3 %></td>
                     </tr>
                     <tr>
                       <td height="30" bgcolor="d6d5d5">이메일 </td>
                       <td width="45"></td>
-                      <td>aaa@naver.com</td>
+                      <td><%=email %></td>
                     </tr>
                 </table></td>
               </tr>
@@ -220,27 +248,22 @@ body {
                       <td width="17" rowspan="5" bgcolor="d6d5d5"></td>
                       <td width="75" height="33" bgcolor="d6d5d5" style="padding-top:3px;">받으실 분 </td>
                       <td width="45"></td>
-                      <td style="padding-top:3px;">홍길동</td>
+                      <td style="padding-top:3px;"><%=dest.getDest_name() %></td>
                     </tr>
                     <tr>
                       <td height="30" bgcolor="d6d5d5">전화번호</td>
                       <td>&nbsp;</td>
-                      <td>01-111-1111</td>
-                    </tr>
-                    <tr>
-                      <td height="30" bgcolor="d6d5d5">핸드폰번호</td>
-                      <td>&nbsp;</td>
-                      <td>011-111-1111</td>
+                      <td><%=dest.getCell1() %>-<%=dest.getCell2() %>-<%=dest.getCell3() %></td>
                     </tr>
                     <tr>
                       <td height="30" bgcolor="d6d5d5">받으실 곳 </td>
                       <td>&nbsp;</td>
-                      <td>서울시 강동구 </td>
+                      <td><%=dest.getHouse1() %><%=dest.getHouse2() %> </td>
                     </tr>
                     <tr>
                       <td height="30" bgcolor="d6d5d5">배송메시지</td>
                       <td>&nbsp;</td>
-                      <td>&nbsp;</td>
+                      <td><%=dest.getMsg() %></td>
                     </tr>
                 </table></td>
               </tr>
@@ -256,9 +279,15 @@ body {
             <td height="24">&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="300" align="right"><a href="step3.html" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image19','','images/sanction/btn_cash_over.gif',1)"><img src="/images/sanction/btn_cash.gif" name="Image19" width="70" height="26" border="0" id="Image19" /></a><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image17','','images/sanction/btn_cash_over.gif',1)"></a></td>
+                <td width="300" align="right">
+                <a href="step2_save.jsp">
+                <img src="/images/sanction/btn_cash.gif" name="Image19" width="70" height="26" border="0" id="Image19" />
+                </a>
+                <a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image17','','images/sanction/btn_cash_over.gif',1)"></a></td>
                 <td width="20">&nbsp;</td>
-                <td width="411"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image20','','images/sanction/btn_back_over.gif',1)"><img src="/images/sanction/btn_back.gif" name="Image20" width="70" height="26" border="0" id="Image20" /></a><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image18','','images/sanction/btn_back_over.gif',1)"></a></td>
+                <td width="411">
+                <a href="javascript:history.back()" >뒤로가기</a>
+             </td>
               </tr>
             </table></td>
             <td>&nbsp;</td>

@@ -3,6 +3,7 @@ package com.fashion.shopping.domain;
 public class Dest {
 	
 	private int dest_id;
+	private int ordersum;
 	private String dest_name;
 	private String cell1;
 	private String cell2;
@@ -12,6 +13,13 @@ public class Dest {
 	private String house1;
 	private String house2;
 	private String msg;
+
+	public int getOrdersum() {
+		return ordersum;
+	}
+	public void setOrdersum(int ordersum) {
+		this.ordersum = ordersum;
+	}
 	public int getDest_id() {
 		return dest_id;
 	}

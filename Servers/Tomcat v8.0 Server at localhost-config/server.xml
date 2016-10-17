@@ -109,13 +109,13 @@
 			<Context docBase="DataMigration" path="/DataMigration" reloadable="true" source="org.eclipse.jst.jee.server:DataMigration">
 			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="java0919" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="java0919"/>
 			</Context>
-			<Context docBase="fashionShop" path="/" reloadable="true" source="org.eclipse.jst.jee.server:fashionShop">
+			<Context docBase="fashionShop" path="/fashionShop" reloadable="true" source="org.eclipse.jst.jee.server:fashionShop">
 			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="fashion" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="fashion"/>
 			</Context>
 			<Context docBase="MapApp" path="/MapApp" reloadable="true" source="org.eclipse.jst.jee.server:MapApp">
 			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="fashion" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="fashion"/>
 			</Context>
-			</Host>
+			<Context docBase="MVCProject" path="/MVCProject" reloadable="true" source="org.eclipse.jst.jee.server:MVCProject"/><Context docBase="MVCFramework" path="/" reloadable="true" source="org.eclipse.jst.jee.server:MVCFramework"/></Host>
 		</Engine>
 	</Service>
 </Server>

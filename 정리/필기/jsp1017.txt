@@ -1,0 +1,24 @@
+mybatis
+join
+
+resultMap -- 컬럼명과 객체의 프로퍼티 불일치 사용가능
+collection -- 객체의 프로퍼티가 집합형일때, resultMap 내부에서 매핑이 가능
+----------------------------------------------------------------------------------
+비동기 방식으로 데이터 전송시 배열 파라미터의 경우....
+var arr=[];
+
+
+-->$.pst(url,{
+	name:"배트맨",
+	friends:JSON.stringify(arr)
+
+},function(){
+})
+
+(개발방법론)
+MVC ---javaEE
+          Model-      .java
+          View -       .jsp(디자인)
+          Controller   .servlet
+모델2 : MVC 이론을 javaEE분야의 기술로 구현한 개발 방법을 모델 2방식이라 한다.
+ 

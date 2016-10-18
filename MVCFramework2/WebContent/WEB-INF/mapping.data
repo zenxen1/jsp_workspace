@@ -1,0 +1,19 @@
+#글쓰기 요청
+/board/write.do=com.sds.board.controller.WriteController
+#글목록 요청
+/board/list.do=com.sds.board.controller.ListController
+#글상세 요청
+/board/detail.do=com.sds.board.controller.DetailController
+#글수정 요청
+/board/edit.do=com.sds.board.controller.EditController
+#글삭제 요청
+/board/delete.do=com.sds.board.controller.DeleteController
+
+
+###############################################
+뷰와 관련된 파일명이 변경되면, 컨트롤러 자바 소스의 변경이 불가피하므로 유지보수성이 떨어진다.
+따라서 뷰페이지의 직접적 정보는 매핑 파일로 처리한다....
+/board/view/list=/board/list.jsp
+/board/view/write=/board/list.do
+/board/view/detail=/board/detail.jsp
+/board/view/delete=/board/list.do

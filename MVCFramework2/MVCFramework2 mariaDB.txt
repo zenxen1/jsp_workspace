@@ -1,0 +1,24 @@
+C:\mariadb-10.1.14-winx64\bin>mysql -h localhost -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 4
+Server version: 10.1.14-MariaDB mariadb.org binary distribution
+
+
+MariaDB [(none)]> create database mvc;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use mvc
+Database changed
+
+
+
+MariaDB [mvc]> create table board(
+    -> board_id int primary key auto_increment
+    -> ,writer varchar(20)
+    -> ,title varchar(100)
+    -> ,regdate timestamp default now()
+    -> ,hit int default 0
+    -> ,content text
+    -> )default charset utf8;
+Query OK, 0 rows affected (0.20 sec)

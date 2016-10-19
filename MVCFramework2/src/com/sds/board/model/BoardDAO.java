@@ -13,7 +13,7 @@ public class BoardDAO {
 	public int insert(Board board){
 		int result=0;
 		SqlSession session = manager.getSession();
-		session.insert("Board.insert",board);
+		result = session.insert("Board.insert",board);
 		session.commit();
 		session.close();
 		return result;
@@ -36,7 +36,15 @@ public class BoardDAO {
 	public int delete(int board_id){
 		int result =0;
 		SqlSession session = manager.getSession();
-		session.delete("Board.delete", board_id);
+		result = session.delete("Board.delete", board_id);
+		session.commit();
+		session.close();
+		return result;
+	}
+	public int update(Board board){
+		int result =0;
+		SqlSession session = manager.getSession();
+		result = session.update("Board.update", board);
 		session.commit();
 		session.close();
 		return result;

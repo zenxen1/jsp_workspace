@@ -1,0 +1,16 @@
+#컨트롤러 매핑
+/reboard/list.do=com.sds.board.controller.ListController
+/reboard/write.do=com.sds.board.controller.WriteController
+/reboard/detail.do=com.sds.board.controller.DetailController
+/reboard/delete.do=com.sds.board.controller.DeleteController
+/reboard/edit.do=com.sds.board.controller.EditController
+/reboard/reply.do=com.sds.board.controller.ReplyController
+
+
+#뷰매핑
+/reboard/view/list=/reboard/list.jsp
+/reboard/view/write=/reboard/list.do
+/reboard/view/detail=/reboard/detail.jsp
+/reboard/view/delete=
+/reboard/view/edit=
+/reboard/view/reply=

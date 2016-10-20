@@ -13,4 +13,4 @@
 /reboard/view/detail=/reboard/detail.jsp
 /reboard/view/delete=
 /reboard/view/edit=
-/reboard/view/reply=
+/reboard/view/reply=/reboard/list.do

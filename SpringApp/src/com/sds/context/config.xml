@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 프라이팬 -->
+	<bean id="frypan" class="com.sds.cook.FryPan"/>
+	<!-- 전기팬 -->
+	<bean id="elecPan" class="com.sds.cook.ElecPan"/>
+	
+	<!-- 요리사 프래인팬을 쓸 경우 -->
+	<bean id="chef" class="com.sds.cook.Chef">
+		<property name="pan" ref="elecPan"/>
+	</bean>
+	
+	<bean id="t_id" class="javax.swing.JTextField">
+		<constructor-arg index="0" type="int" value="10"/>
+	</bean>
+	
+	<bean id="t_password" class="javax.swing.JPasswordField">
+		<constructor-arg index="0" type="int" value="10"/>
+	</bean>
+	
+	<bean id="t_name" class="javax.swing.JTextField">
+		<constructor-arg index="0" type="int" value="10"/>
+	</bean>
+	
+	<bean id="area" class="javax.swing.JTextArea">
+		<constructor-arg index="0" type="int" value="30"/>
+		<constructor-arg index="1" type="int" value="40"/>
+	</bean>
+	
+	<bean id="scroll" class="javax.swing.JScrollPane">
+		<constructor-arg index="0" ref="area"/>
+	</bean>
+	
+	<bean id="bt1" class="javax.swing.JButton">
+		<constructor-arg value="나버튼"/>
+	</bean>
+	
+	<bean id="myFrame" class="com.sds.gui.MyFrame">
+		<property name="t_id" ref="t_id"/>
+		<property name="t_password" ref="t_password"/>
+		<property name="t_name" ref="t_name"/>
+		<property name="scroll" ref="scroll"/>
+		<property name="BT2" ref="bt1"/>
+	</bean>
+		
+</beans>

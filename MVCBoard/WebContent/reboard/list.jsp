@@ -1,4 +1,19 @@
+<%@page import="com.sds.domain.ReBoard"%>
+<%@page import="java.util.List"%>
+<%@page import="com.sds.common.board.PagingManager"%>
 <%@ page contentType="text/html;charset=utf-8"%>
+
+<%
+	List <ReBoard> list = (List) request.getAttribute("list");
+	PagingManager pm = (PagingManager) request.getAttribute("pm");
+	pm.init(request);
+	
+	int currentPage=1;
+	if(request.getParameter("currentPage")!=null){
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		pm.setCurrentPage(currentPage);
+	}
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -23,6 +38,12 @@
 #copyright{font-size:9pt;}
 a{text-decoration:none}
 img{border:0px}
+
+.pageNum{
+	color:green;
+	font-weight:bold;
+	font-size:14pt;
+}
 </style>
 <script>
 
@@ -50,70 +71,53 @@ img{border:0px}
 	<tr>	
 		<td colspan="5" id="list">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+		 
+		 	<%
+		 	int curPos = pm.getCurPos();
+		 	int num = pm.getNum();
+		 	%>
+		 	<%for(int i=0;i<pm.getPageSize();i++){ %>
+		 	<%if(num<1){ break;} %>
+		 	<%ReBoard board = list.get(curPos++); %>
 		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
-			  <td width="50">1</td>
-			  <td width="303"><a href="detail.jsp">제목입니다.</a></td>
-			  <td width="100">관리자</td>
-			  <td width="100">2008/02/10</td>
-			  <td width="50">5</td>
+			  <td width="50"><%=num-- %></td>
+			  <td width="303" align="left">
+			  <%if(board.getDepth()>0){ %>
+			  <lmg src="/images/spacer.png" height="1px" width="<%=board.getDepth()*10 %>" style="border:1px solid red">
+			  <img src="/images/re.png" width="10px">
+			  <%} %>
+			  <a href="/reboard/detail.do?reboard_id=<%=board.getReboard_id()%>"><%=board.getTitle() %></a></td>
+			  <td width="100"><%=board.getWriter() %></td>
+			  <td width="100"><%=board.getRegdate().substring(0,10) %></td>
+			  <td width="50"><%=board.getHit() %></td>
 		    </tr>
 			<tr>
 				<td height="1" colspan="5" background="/images/line_dot.gif"></td>
 			</tr>
-		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
-			  <td width="50">1</td>
-			  <td width="303">제목입니다.</td>
-			  <td width="100">관리자</td>
-			  <td width="100">2008/02/10</td>
-			  <td width="50">5</td>
-		    </tr>
-			<tr>
-				<td height="1" colspan="5" background="/images/line_dot.gif"></td>
-			</tr>
-		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
-			  <td width="50">1</td>
-			  <td width="303">제목입니다.</td>
-			  <td width="100">관리자</td>
-			  <td width="100">2008/02/10</td>
-			  <td width="50">5</td>
-		    </tr>
-			<tr>
-				<td height="1" colspan="5" background="/images/line_dot.gif"></td>
-			</tr>
-		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
-			  <td width="50">1</td>
-			  <td width="303">제목입니다.</td>
-			  <td width="100">관리자</td>
-			  <td width="100">2008/02/10</td>
-			  <td width="50">5</td>
-		    </tr>
-			<tr>
-				<td height="1" colspan="5" background="/images/line_dot.gif"></td>
-			</tr>
-		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
-			  <td width="50">1</td>
-			  <td width="303">제목입니다.</td>
-			  <td width="100">관리자</td>
-			  <td width="100">2008/02/10</td>
-			  <td width="50">5</td>
-		    </tr>
-			<tr>
-				<td height="1" colspan="5" background="/images/line_dot.gif"></td>
-			</tr>
-		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
-			  <td width="50">1</td>
-			  <td width="303">제목입니다.</td>
-			  <td width="100">관리자</td>
-			  <td width="100">2008/02/10</td>
-			  <td width="50">5</td>
-		    </tr>
-			<tr>
-				<td height="1" colspan="5" background="/images/line_dot.gif"></td>
-			</tr>
+		  <%} %>
 		  </table>		</td>
 	</tr>
   <tr>
-    <td id="paging" height="20" colspan="5" align="center">[1][2][3][4][5][6][7][8][9][10]</td>
+    <td id="paging" height="20" colspan="5" align="center">
+    
+     <%if(pm.getFirstPage()-1<1){ %>
+    <a href="javascript:alert('이전 페이지가 없습니다!');">◀</a>
+    <%}else{ %>
+    <a href="/reboard/list.do?currentPage=<%=pm.getFirstPage()-1%>">◀</a>
+    <%} %>
+    
+    <%for(int i=pm.getFirstPage();i<=pm.getLastPage();i++){ %>
+    <%if(i>pm.getTotalPage())break; %>
+    <a <%if(pm.getCurrentPage()==i){ %>class="pageNum" <%} %> href="/reboard/list.do?currentPage=<%=i%>">[<%=i%>]</a>
+    <%} %>
+    
+    <%if(pm.getLastPage()+1>=pm.getTotalPage()){ %>
+    <a href="javascript:alert('다음 페이지가 없습니다!');">▶</a>
+    <%}else{ %>
+    <a href="/reboard/list.do?currentPage=<%=pm.getLastPage()+1%>">▶</a>
+    <%} %>
+    
+    </td>
   </tr>
   <tr>
     <td height="20" colspan="5" align="right" style="padding-right:2px;">

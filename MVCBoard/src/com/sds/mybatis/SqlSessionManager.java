@@ -32,7 +32,7 @@ public class SqlSessionManager {
 	}
 	
 	public SqlSession getSession(){
-		return sqlSessionFactory.openSession();
+		return sqlSessionFactory.openSession(false);
 	}
 
 }

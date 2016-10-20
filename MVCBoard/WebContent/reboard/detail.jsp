@@ -1,4 +1,8 @@
+<%@page import="com.sds.domain.ReBoard"%>
 <%@ page contentType="text/html;charset=utf-8"%>
+<%
+	ReBoard dto = (ReBoard) request.getAttribute("reboard");
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -27,8 +31,24 @@ border:#C3C3C3 1px solid
 a{text-decoration:none}
 img{border:0px}
 </style>
+<script>
+function showForm(){
+	var replyArea = document.getElementById("replyArea");
+	if(replyArea.style.display=="none"){
+		replyArea.style.display="block";
+	}else{
+		form1.action="/reboard/reply.do";
+		form1.submit();
+	}
+}
+</script>
 </head>
 <body>
+<form name="form1" method="post">
+<input type="hidden" name="team" value="<%=dto.getTeam() %>">
+<input type="hidden" name="rank" value="<%=dto.getRank() %>">
+<input type="hidden" name="depth" value="<%=dto.getDepth()%>">
+
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td><img src="/images/ceil.gif" width="603" height="25"></td>
@@ -47,24 +67,46 @@ img{border:0px}
           </tr>
           <tr id="writer">
             <td height="25" align="center">작성자</td>
-            <td><input type="text" name="textfield"></td>
+            <td><input type="text" name="writer" value="<%=dto.getWriter()%>"></td>
           </tr>
           <tr id="title">
             <td height="25" align="center">제목</td>
-            <td><input type="text" name="textfield2"></td>
+            <td><input type="text" name="title" value="<%=dto.getTitle()%>"></td>
           </tr>
           <tr id="content">
             <td align="center">내용</td>
-            <td><textarea name="content" style=""></textarea></td>
+            <td><textarea name="content" style=""><%=dto.getContent() %></textarea></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
+          
+          <!-- 답변 폼 begin -->
+          <tr><td colspan="2">
+          
+	       <table id="replyArea" style="display:none">
+          <tr id="writer">
+            <td height="25" align="center">작성자</td>
+            <td><input type="text" name="r_writer" value="<%=dto.getWriter()%>"></td>
+          </tr>
+          <tr id="title">
+            <td height="25" align="center">제목</td>
+            <td><input type="text" name="r_title" value="<%=dto.getTitle()%>"></td>
+          </tr>
+          <tr id="content">
+            <td align="center">내용</td>
+            <td><textarea name="r_content" style=""><%=dto.getContent() %></textarea></td>
+          </tr>
+          </table>
+          
+          </td></tr>
+          
         </table></td>
 	</tr>
   <tr>
     <td height="30" align="right" style="padding-right:2px;">
+    <a href="javascript:showForm()">답변달기</a>
 	<img src="/images/write_btin.gif" width="61" height="20">
 	<img src="/images/delete_btn.gif" width="61" height="20"> <a href="list.jsp"><img src="/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
   </tr>
@@ -75,5 +117,6 @@ img{border:0px}
     <td height="20" align="center" id="copyright">Copyright zino All Rights Reserved </td>
   </tr>
 </table>
+</form>
 </body>
 </html>

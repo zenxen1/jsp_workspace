@@ -1,33 +1,22 @@
 package com.sds.board.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Request;
-
 import com.sds.board.model.ReBoardDAO;
-import com.sds.common.board.PagingManager;
 import com.sds.controller.Controller;
+import com.sds.domain.ReBoard;
 
-public class ListController implements Controller{
+public class DetailController implements Controller{
 	ReBoardDAO dao = new ReBoardDAO();
-	PagingManager pm = new PagingManager();
-	
-	
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
+		String reboard_id = req.getParameter("reboard_id");
+		ReBoard board = dao.selectOne(Integer.parseInt(reboard_id));
+		req.setAttribute("reboard", board);
 		
-		List list = dao.selectAll();
-		req.setAttribute("list", list);
-		pm.init(req);
-		req.setAttribute("pm", pm);
-		
-		return "/reboard/view/list";
+		return "/reboard/view/detail";
 	}
-	
 	public boolean isForward() {
-		
 		return true;
 	}
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+
+	<!-- 동생 컨트롤러들을 명시하면 된다.. 
+	뿐만 아니라, 어플리케이션 내에서 사용할 모든 ~~객체를 등록하면 된다.
+	-->
+	
+	<!-- 게시판 컨트롤러 정의 
+	<bean id="boardController" class="com.sds.board.controller.BoardController"/>
+	-->
+	<!-- 과거 버전 (스프링 2.xx)에서는 dispatcherServlet이 업무를 분담시킬 컨트롤러를 선택하기 위해 
+	HandlerMappin의 하위 객체 중 다음과 같은 빈을 사용해 왔다.
+	
+	1.SimpleUrlHandlerMapping
+	2.BeanNameUrlHandlerMapping
+	
+	하지만 3,4xx에서는 좀더 보완된 방식의 
+	DefaultAnnotationHandlerMapping 방식을 지원한다... -->
+	<bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	<property name="mappings">
+		<props>
+			<prop key="/board/list.do">listController</prop>
+			<prop key="/board/detail.do">detailController</prop>
+			<prop key="/board/delete.do">deleteController</prop>
+			<prop key="/board/edit.do">editController</prop>
+		</props>
+	</property>
+	</bean>
+	
+	<bean id="boardDAO" class="com.sds.board.model.BoardDAO"></bean>
+	
+	<bean id="listController" class="com.sds.board.controller.ListController">
+		<property name="boardDAO" ref="boardDAO"/>
+	</bean>
+	
+	<bean id="detailController" class="com.sds.board.controller.DetailController">
+		<property name="boardDAO" ref="boardDAO"/>
+	</bean>
+	
+	<bean id="deleteController" class="com.sds.board.controller.DeleteController">
+		<constructor-arg ref="boardDAO"/>
+	</bean>
+	
+	<bean id="editController" class="com.sds.board.controller.EditController">
+		<property name="boardDAO" ref="boardDAO"/>
+	</bean>
+	
+	
+</beans>

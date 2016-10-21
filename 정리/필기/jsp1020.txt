@@ -2,3 +2,24 @@ spring
 
 DI - Dependency Injection - 의존성탈피를 위한 외부 주입
 AOP - Aspect Oriented Programming - 관점 지향 프로그래밍
+
+Spring 등장 배경
+-96 자바 언어 등장 (자바 듀크 덤블링)
+-96 년도 말 javaBean 스팩 (UI)
+-Enterprise Java Bean : EJB
+ 지원 : 소스 코드 차원이 아니라 선언적 (외부 설정적 방법:XML)  방법으로도 보안,
+         트랜잭션, 분산 컴퓨터 
+ 단점 : 이름만 자바빈즈였지, 사실상 개발자들이 체감하는 개발 코드는 자바X
+
+- EJB 단점인 자바스럽지 않은 코드를 다시
+  POJO(예전의 그 자바스러웠던 코드)와 xml 조합 + 각종 개발 방법 패턴 = 개발 환경 =Spring Framework
+----------------------------------------------------------------------------------------------------------------
+DI(Dependency Injection) - 의존성을 약하시키기 위해 객체를 외부에서 주입받자!!!
+(1) has a 관계로 객체를 보유할때는 최상위 자료형을 보유할 수록 유연해진다 
+    유지보수성이 높아진다...
+(2)객체관리는 ApplicationContext에서 한다. 
+
+AOP(Aspect Oriented Programming)
+: 관점 지향 프로그래밍 
+
+

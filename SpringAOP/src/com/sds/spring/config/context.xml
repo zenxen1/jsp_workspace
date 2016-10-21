@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+   <!-- 어플리케이션에 필요한 모든 객체는 이 xml에 등록해야한다 인스턴스는 스프링이 생성해준다 -->
+	
+	<!-- AOP에서는 어플리케이션의 전반적으로 사용되는 로직을 가리켜 Cross cutting Concern 
+		횡단적 관심 사항..이 관심 사항을 코드로 구현 할때 이러한 역활의 코드를 Advice라하고, 
+		이 Advice가 적용되어야 할 위치 및 시점을 PointCut 
+		이러한 용어들은 스프링의 용어가 아니라, 이미 스프링 이전에 AspectJ라는 모듈이 존재하였었다..
+		AOP는 스프링의 개념이 아니었다..  
+	-->
+	<bean id="bell" class="com.sds.military.Bell"/>
+	<bean id="soldier" class="com.sds.military.Soldier"/>
+	
+	<aop:config>
+		<aop:aspect id="bellAspect" ref="bell">
+			<aop:pointcut expression="execution(public * *(..))" id="bellCut"/>
+			<aop:before method="sound" pointcut-ref="bellCut"/>
+		</aop:aspect>
+	</aop:config>
+	
+	
+</beans>

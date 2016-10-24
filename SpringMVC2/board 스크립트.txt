@@ -1,0 +1,26 @@
+create tablespace spring1024
+datafile 'C:\oraclexe\app\oracle\oradata\XE\spring1024'
+size 10m
+
+
+
+create user spring
+identified by spring
+default tablespace spring1024
+quota unlimited on spring1024
+/
+
+grant create session, create table, create sequence to spring
+
+create table board(
+board_id number primary key
+,writer varchar2(20)
+,title varchar2(100)
+,content clob
+,regdate date default sysdate
+,hit number default 0
+);
+
+create sequence seq_board
+start with 1
+increment by 1;

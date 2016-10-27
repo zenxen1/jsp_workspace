@@ -2,8 +2,15 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	<!-- 자동으로 메모리에 올려준다!! 하지만 위빙도 정의해줘야 한다 -->
+<!-- 	<context:component-scan base-package="com.sds.board.controller">
+	</context:component-scan> -->
+	
+		<context:component-scan base-package="com.sds"/>
 	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/"></property>
@@ -15,25 +22,26 @@
 	
 	
 	<!-- 사용될 모델을 빈으로 등록 -->
+<!-- 	<bean id="boardDAOMybatis" class="com.sds.board.model.BoardDAOMybatis"/>
 	<bean id="boardDAOjdbc" class="com.sds.board.model.BoardDAOjdbc">
 		<property name="pool" ref="poolManager"/>
-	</bean>
+	</bean> -->
 	
 	<!-- PageingManager 빈으로 등록 -->
 	<bean id="pagingManager" class="com.sds.common.board.PagingManager"/>
 	
 	<!-- 사용될 컨트롤러 빈으로 등록 weaving -->
-	<bean id="boardController" class="com.sds.board.controller.BoardController">
-		<property name="boardDAO" ref="boardDAOjdbc"/>
+<!-- 	<bean id="boardController" class="com.sds.board.controller.BoardController">
+		<property name="boardDAO" ref="boardDAOMybatis"/>
 		<property name="pm" ref="pagingManager"/>
 	</bean>
-	
+	 -->
 		<!-- 공통관심사항(cross cutting concern)을 원하는 객체가 작동시, 실행시켜보자!! -->
-	<bean id="logTest" class="test.LogTest"/>
+	<bean id="controllerLog" class="com.sds.common.logging.ControllerLog"/>
 	
 	<aop:config>
-		<aop:aspect id="logAspect" ref="logTest">
-			<aop:pointcut expression="execution(public * com.sds.board.controller..*.*(..))" id="controllerCut"/>
+		<aop:aspect id="logAspect" ref="controllerLog">
+			<aop:pointcut expression="execution(public * com.sds.board.controller..*(..))" id="controllerCut"/>
 			<aop:around method="printMsg" pointcut-ref="controllerCut"/>
 		</aop:aspect>
 	</aop:config>

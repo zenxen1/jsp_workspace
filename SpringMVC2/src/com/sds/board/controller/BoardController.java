@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,19 +18,25 @@ import com.sds.domain.Board;
 @RequestMapping("/board/") //꿀팁 공통되는거 뺄수 있다
 public class BoardController {
 	//BoardDAO와 현재 컨틀로러는 결합도가 낮아야, 유지보수성이 좋아진다..따라서 boardDAO 최상위 인터페이스로 정의
+	
+	@Autowired
+	@Qualifier("boardDAOMybatis")//boardDAO가 두개중에 골라줘야 한다
 	private BoardDAO boardDAO;
+	
+	//자동으로 역어주기 때문에 세터는 상관읍다
+	@Autowired
 	private PagingManager pm;
 	
-	//자동맵핑 DTO와 넘겨주는 파라미터 아이디는 꼭 일치해야된다
+	/*//자동맵핑 DTO와 넘겨주는 파라미터 아이디는 꼭 일치해야된다
 	public void setBoardDAO(BoardDAO boardDAO) {
 		this.boardDAO = boardDAO;
 	}
 	
-	public void setPm(PagingManager pm) {
+	public void setPm(PagingManager pm) { 
 		this.pm = pm;
 	}
 	
-	@RequestMapping("/write.do")
+*/	@RequestMapping("/write.do")
 	public String insert(Board board){ //내부적으로 인터셉트
 		boardDAO.insert(board);
 		//System.out.println("insert호출");
@@ -59,5 +67,11 @@ public class BoardController {
 	public String delete(int board_id){
 		boardDAO.delete(board_id);
 		return "redirect:/board/list.do";
+	}
+	
+	@RequestMapping("edit.do")
+	public String update(Board board){
+		boardDAO.update(board);
+		return "redirect:/board/detail.do?board_id="+board.getBoard_id();
 	}
 }

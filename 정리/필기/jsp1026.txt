@@ -1,0 +1,24 @@
+AOI
+----------------------------------------------
+AspectJ
+1. 클래스 컴파일 타임에 target + cross = .class
+2. 클래스 로드 타임에 target + cross = 메모리에 새로운 합체물
+3. Runtime시 Proxy(대리)객체를 생성하여 처리
+-----------------------------------------------
+설정파일의 간소화
+- bean을 매번 등록하지 말자..복잡해진다. 
+--->해결책 : component - scan
+      @컴포넌트임을 알려야 한다. 그래야 스캔 대상이 된다. 
+      @Component,Controller,Repository,Service
+     자동으로 생성시 weaving 표현을 못함 
+     -->@Autowired를 명시함 
+    --->문제발생 
+         DI 대상 객체가 하위에 여러개 일 경우 이중 누구를 DI해야할지 결정하지
+         않으면 에러발생!!
+        해결책) @Qualifer()
+------------------------------------------------------------
+스프링 프레임웍으로 업로드 구현 
+: commonsMultipartResolver
+
+DTO 에 MutipartFile has a 관계로 보유 시키면, (HTML 파라미터명과 일치)
+파일 컴포넌트의 업로드 정보가 MultipartFile의 인스턴스에 적재됨...

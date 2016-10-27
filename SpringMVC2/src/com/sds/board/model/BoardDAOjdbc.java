@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.sds.domain.Board;
 
+@Repository
 public class BoardDAOjdbc implements BoardDAO{
 	String TAG = this.getClass().getName();
 	
@@ -117,13 +120,13 @@ public class BoardDAOjdbc implements BoardDAO{
 		PreparedStatement pstmt=null;
 		int result = 0;
 		con= pool.getConnection();
-		String sql = "update from board(writer =?,title=?,content=?) where board_id=?";
+		String sql = "update board set writer =?,title=?,content=? where board_id=?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, board.getWriter());
 			pstmt.setString(2, board.getTitle());
 			pstmt.setString(3, board.getContent());
-			pstmt.setString(4, Integer.toString(board.getBoard_id()));
+			pstmt.setInt(4, board.getBoard_id());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -132,7 +135,6 @@ public class BoardDAOjdbc implements BoardDAO{
 		}finally{
 			pool.freeConnection(con, pstmt);
 		}
-		System.out.println(TAG +"¿« insert »£√‚" +result);
 		return result;
 	}
 	

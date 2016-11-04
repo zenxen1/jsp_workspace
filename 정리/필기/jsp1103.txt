@@ -1,0 +1,16 @@
+스프링의 json 처리
+
+1.무식하게 직접 파싱하는법
+2. @requestBody, @ResponseBody
+    json 및 xml 등의 데이터 형식이 보편화됨에 따라, 스프링에서는 좀더 손쉬운 처리를 위한 방법도 
+   제공해 주고 있고...
+
+   클라이언트가 전송한 json 데이터를 자동으로 자바객체로 변환하거나, 반대로 자바객체를 json 응답데이터로 변환해주도록 지원한다...
+   이방법을 이요하려면, 
+   AnnotationMethodHandlerAdapter라는 객체를 빈으로 등록해야 하며, 이때 이빈은 자신이 처리하고자하는 데이터 포멧(xml,json,text 등등..)에
+   따라 알맞는 컨버터를 선택하게 되어 있다..
+   
+  예) json-->MappingJasksonHttpMessageConverter 
+      xml --> MarshallingHttpMessageConverter
+
+3. json 전용 뷰를 이용하는 법

@@ -29,7 +29,7 @@
 	<aop:config>
 		<aop:aspect id="LoggerAspect" ref="myLogger">
 		<aop:pointcut 
-		expression="execution(public * com.sds.controller..*Controller.*(..))" 
+		expression="execution(public * com.sds..*..*(..))" 
 		id="controllerCut"/>
 		<aop:around method="printMsg" pointcut-ref="controllerCut"/>
 		</aop:aspect>

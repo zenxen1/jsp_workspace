@@ -23,8 +23,7 @@ public class ReBoardServiceImpl implements ReBoardService{
 
 	@Override
 	public ReBoard select(int reboard_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return reBoardDAO.select(reboard_id);
 	}
 
 	@Override
@@ -48,10 +47,9 @@ public class ReBoardServiceImpl implements ReBoardService{
 	@Override
 	public int reply(ReBoard reboard) {
 		reBoardDAO.update(reboard);
-		reboard.setTeam(reboard.getTeam()+1);
+		reboard.setDepth(reboard.getDepth()+1);
 		reboard.setRank(reboard.getRank()+1);
-		
-		reBoardDAO.insert(reboard);
+		reBoardDAO.replyInsert(reboard);
 		return 0;
 	}
 

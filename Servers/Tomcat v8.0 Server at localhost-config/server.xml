@@ -117,10 +117,15 @@
 			<Context docBase="SpringUpload" path="/SpringUpload" reloadable="true" source="org.eclipse.jst.jee.server:SpringUpload">
 			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="spring" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="spring"/>
 			</Context>
-			<Context docBase="SpringReboard" path="/" reloadable="true" source="org.eclipse.jst.jee.server:SpringReboard">
+			<Context docBase="SpringReboard" path="/SpringReboard" reloadable="true" source="org.eclipse.jst.jee.server:SpringReboard">
 			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="spring" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="spring"/>
 			</Context>
-			</Host>
+			<Context docBase="fashionShop" path="/fashionShop" reloadable="true" source="org.eclipse.jst.jee.server:fashionShop">
+			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="fashion" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="fashion"/>
+			</Context>
+			<Context docBase="SpringException" path="/SpringException" reloadable="true" source="org.eclipse.jst.jee.server:SpringException">
+			<Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/oracle" password="spring" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="spring"/>
+			</Context><Context docBase="SpringJson" path="/" reloadable="true" source="org.eclipse.jst.jee.server:SpringJson"/></Host>
 		</Engine>
 	</Service>
 </Server>

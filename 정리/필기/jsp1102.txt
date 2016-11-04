@@ -1,0 +1,29 @@
+webapplicationcontext 
+
+서블릿 - webapplicationcontext
+         -xml (2개이상 가능)
+
+생명 request < session < application,
+application(servletcontext)
+
+<listener>
+<context-param>
+xml
+<context-param>
+xml-->servletcontext
+</listener>
+---------------------------------------------------
+tx,aop,log
+---------------------------------------------------
+DB 지원도 함
+트랜잭션, 예외
+--------------------------------------------------
+자바에서는 프로그램의 정상 수행을 방해하는 요인 
+-에러(error) 인간인 개발자가 감당할수 없는 상황
+-예외 인가인 개발자가 감당할수 있는 상황
+
+catched exception
+- 컴파일 타이밍에 강제하는 예외
+
+runtime exception
+-예외처리를 강제하지 않는 예외

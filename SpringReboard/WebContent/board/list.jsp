@@ -66,7 +66,7 @@ img{border:0px}
 		   <%ReBoard board = list.get(curPos++); %>
 		    <tr align="center" height="20px" onMouseOver="this.style.background='#FFFF99'" onMouseOut="this.style.background=''">
 			  <td width="50"><%=num-- %></td>
-			  <td width="303"><a href="/board/detail.do?board_id=<%=board.getReBoard_id()%>"><%=board.getTitle() %></a></td>
+			  <td width="303"><a href="/board/detail.do?reBoard_id=<%=board.getReBoard_id()%>"><%=board.getTitle() %></a></td>
 			  <td width="100"><%=board.getWriter() %></td>
 			  <td width="100"><%=board.getRegdate().substring(0,10) %></td>
 			  <td width="50"><%=board.getHit() %></td>

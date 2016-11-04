@@ -4,10 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.aspectj.weaver.GeneratedReferenceTypeDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sds.model.dao.ReBoardDAO;
 import com.sds.model.domain.ReBoard;
@@ -47,7 +51,7 @@ public class ReBoardDAOJdbc implements ReBoardDAO{
 	public ReBoard select(int reBoard_id) {
 		String sql="select * from reboard where reboard_id=?";
 		
-		ReBoard board=jdbcTemplate.queryForObject(sql, new RowMapper<ReBoard>() {
+		ReBoard reBoard=jdbcTemplate.queryForObject(sql, new RowMapper<ReBoard>() {
 			public ReBoard mapRow(ResultSet rs, int row) throws SQLException {
 				ReBoard ReBoard = new ReBoard(); 
 				
@@ -64,7 +68,7 @@ public class ReBoardDAOJdbc implements ReBoardDAO{
 				return ReBoard;
 			}
 		} , reBoard_id);
-		return board;
+		return reBoard;
 	}
 
 	@Override
@@ -76,9 +80,12 @@ public class ReBoardDAOJdbc implements ReBoardDAO{
 				reBoard.getWriter(), 
 				reBoard.getTitle(),
 				reBoard.getContent()
+				
 		});
 		return result;
 	}
+	
+
 
 	@Override
 	public int delete(int reBoard_id) {
@@ -92,13 +99,29 @@ public class ReBoardDAOJdbc implements ReBoardDAO{
 		return 0;
 	}
 
-	@Override
+	//@Transactional(propagation=Propagation.REQUIRED)
 	public int updateRank(ReBoard reBoard) {
 		String sql = "update reboard set rank=rank+1";
 		sql+=" where team=? and rank > ?";
 		
 		int result = jdbcTemplate.update(sql, reBoard.getTeam(),reBoard.getRank());
 		
+		return result;
+	}
+	
+	public int replyInsert(ReBoard reBoard) {
+		String sql="insert into reboard(reboard_id,writer,title,content,team,rank,depth)";
+		sql+=" values(seq_reboard.nextval,?,?,?,?,?,?)";
+		
+		int result=jdbcTemplate.update(sql, new Object[]{
+				reBoard.getWriter(), 
+				reBoard.getTitle(),
+				reBoard.getContent(),
+				reBoard.getTeam(),
+				reBoard.getRank(),
+				reBoard.getDepth()
+				
+		});
 		return result;
 	}
 	

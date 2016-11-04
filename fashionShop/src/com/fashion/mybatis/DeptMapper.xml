@@ -7,14 +7,14 @@
 <resultMap id="deptMap" type="Dept">
 	<id column="deptno" property="deptno"/>
 	<result column="dname" property="dname"/>
-	<result column="loc" property="loc"/>
+	<result column="loc" property="locd"/>
 	<collection property="empList" javaType="java.util.ArrayList" ofType="Emp">
 		<id column="empno" property="empno"/>
 		<result column="ename" property="ename"/>
 		<result column="job" property="job"/>
 		<result column="mgr" property="mgr"/>
 		<result column="hiredate" property="hiredate"/>
-		<result column="sal" property="sal"/>
+		<result column="loce" property="loce"/>
 		<result column="comm" property="comm"/>
 		
 	</collection>
@@ -22,8 +22,8 @@
 
 <select id="selectAll" resultType="Dept" resultMap="deptMap">
 	select d.deptno as deptno, 
-	dname, loc,
-	empno, ename, job, mgr, hiredate, sal, comm
+	dname, d.loc as locd,
+	empno, ename, job,mgr, hiredate, e.loc as loce, comm
 	from dept d, emp e
 	where d.deptno=e.deptno
 </select>

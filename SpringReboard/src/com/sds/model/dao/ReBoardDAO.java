@@ -12,4 +12,5 @@ public interface ReBoardDAO {
 	public int delete(int reboard_id);
 	public int update(ReBoard reboard);
 	public int updateRank(ReBoard reboard);
+	public int replyInsert(ReBoard reBoard);
 }

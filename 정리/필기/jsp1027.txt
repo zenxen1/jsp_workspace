@@ -1,0 +1,13 @@
+spring mvc 만을 지원한다
+-->javaee가 계층에서 핑료시되는 대부분의 기능들을 지원
+
+spring 데이터베이스 연동 기술
+jdbc, ibatis/mybatis, hibernate
+jpa, jta...
+------------------template-----------------------
+jdbc --> jdbcTemplate
+ibatis/mybatis ---> sqlsessiontemplate
+---------------service----------------------------
+@Controller
+@service(1. 컨트롤러가 더이상 비즈니스 관여하지 않게 된다...2. 트랜잭션 처리를 담당한다)
+@respository

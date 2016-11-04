@@ -14,6 +14,7 @@
 	out.print(list.size());
 %>
 
+
 <table width ="100%" border="1px">
 	<tr>
 		<td>Deptno</td>
@@ -41,7 +42,7 @@
 		<td><%=empList.get(a).getJob() %></td>
 		<td><%=empList.get(a).getMgr() %></td>
 		<td><%=empList.get(a).getHiredate() %></td>
-		<td><%=empList.get(a).getSal() %></td>
+		<td><%=empList.get(a).getLoce()%></td>
 		<td><%=empList.get(a).getComm() %></td>
 	</tr>
 		<%} %>

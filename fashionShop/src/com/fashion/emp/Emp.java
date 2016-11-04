@@ -6,10 +6,17 @@ private String ename;
 private String job;
 private int	 mgr;
 private String	 hiredate;
-private int	 sal;
+private int	 loce;
 private int	 comm;
 private int	 deptno;
 
+
+public int getLoce() {
+	return loce;
+}
+public void setLoce(int loce) {
+	this.loce = loce;
+}
 public int getEmpno() {
 	return empno;
 }
@@ -40,12 +47,7 @@ public String getHiredate() {
 public void setHiredate(String hiredate) {
 	this.hiredate = hiredate;
 }
-public int getSal() {
-	return sal;
-}
-public void setSal(int sal) {
-	this.sal = sal;
-}
+
 public int getComm() {
 	return comm;
 }

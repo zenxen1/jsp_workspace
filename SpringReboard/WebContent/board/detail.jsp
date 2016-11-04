@@ -1,7 +1,7 @@
-<%@page import="com.sds.domain.Board"%>
+<%@page import="com.sds.model.domain.ReBoard"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
-	Board board = (Board)request.getAttribute("board");
+	ReBoard dto = (ReBoard) request.getAttribute("reBoard");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -32,14 +32,12 @@ a{text-decoration:none}
 img{border:0px}
 </style>
 <script>
-function del(){
-	if(confirm("정말 삭제하시겠냐?")){
-		location.href="/board/delete.do?board_id=<%=board.getBoard_id()%>"
-	}
-}
-function edit(){
-	if(confirm("수정하시겠냐?")){
-		form1.action="/board/edit.do";
+function showForm(){
+	var replyArea = document.getElementById("replyArea");
+	if(replyArea.style.display=="none"){
+		replyArea.style.display="block";
+	}else{
+		form1.action="/board/reply.do";
 		form1.submit();
 	}
 }
@@ -47,7 +45,10 @@ function edit(){
 </head>
 <body>
 <form name="form1" method="post">
-<input type="hidden" name="board_id" value="<%=board.getBoard_id()%>">
+<input type="hidden" name="team" value="<%=dto.getTeam() %>">
+<input type="hidden" name="rank" value="<%=dto.getRank() %>">
+<input type="hidden" name="depth" value="<%=dto.getDepth()%>">
+
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td><img src="/images/ceil.gif" width="603" height="25"></td>
@@ -66,26 +67,48 @@ function edit(){
           </tr>
           <tr id="writer">
             <td height="25" align="center">작성자</td>
-            <td><input type="text" name="writer" value="<%=board.getWriter()%>"></td>
+            <td><input type="text" name="writer" value="<%=dto.getWriter()%>"></td>
           </tr>
           <tr id="title">
             <td height="25" align="center">제목</td>
-            <td><input type="text" name="title" value="<%=board.getTitle()%>"></td>
+            <td><input type="text" name="title" value="<%=dto.getTitle()%>"></td>
           </tr>
           <tr id="content">
             <td align="center">내용</td>
-            <td><textarea name="content" style=""><%=board.getContent() %></textarea></td>
+            <td><textarea name="content" style=""><%=dto.getContent() %></textarea></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
+          
+          <!-- 답변 폼 begin -->
+          <tr><td colspan="2">
+          
+	       <table id="replyArea" style="display:none">
+          <tr id="writer">
+            <td height="25" align="center">작성자</td>
+            <td><input type="text" name="r_writer" value="<%=dto.getWriter()%>"></td>
+          </tr>
+          <tr id="title">
+            <td height="25" align="center">제목</td>
+            <td><input type="text" name="r_title" value="<%=dto.getTitle()%>"></td>
+          </tr>
+          <tr id="content">
+            <td align="center">내용</td>
+            <td><textarea name="r_content" style=""><%=dto.getContent() %></textarea></td>
+          </tr>
+          </table>
+          
+          </td></tr>
+          
         </table></td>
 	</tr>
   <tr>
     <td height="30" align="right" style="padding-right:2px;">
-	<img src="/images/write_btin.gif" width="61" height="20" onClick="edit()">
-	<img src="/images/delete_btn.gif" width="61" height="20" onClick="del()"> <a href="list.do"><img src="/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
+    <a href="javascript:showForm()">답변달기</a>
+	<img src="/images/write_btin.gif" width="61" height="20">
+	<img src="/images/delete_btn.gif" width="61" height="20"> <a href="list.jsp"><img src="/images/list_btn.gif" width="61" height="20" border="0"></a> </td>
   </tr>
   <tr>
     <td height="1" bgcolor="#CCCCCC"></td>

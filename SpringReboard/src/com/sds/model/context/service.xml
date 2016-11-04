@@ -4,9 +4,13 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 <!-- 	<bean id="dog" class="com.sds.test.Dog"></bean> -->
 
@@ -18,6 +22,32 @@
 <jee:jndi-lookup id="dataSource" jndi-name="jdbc/oracle"
 resource-ref="true"/>
 
+<!-- 트랜잭션 매니져 등록 
+jdbc,mybatis : datasourceTransactionManager
+hibernate : hibernate taransactionmanager
+-->
+<bean id="transactionManager" 
+class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+p:dataSource-ref="dataSource"/>
+
+<!-- 트랜잭션 처리를 건 by 건으로 처리 할때 자바 코드에서 제어하고자 할때..주로 트랜잭션은 서비스에 @transactional 건다 -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+<!-- aop를 이용하여 어플리케이션 전체에 걸 수 있다.. -->
+<tx:advice id="myTx" transaction-manager="transactionManager">
+	<tx:attributes>
+		<tx:method name="reply" propagation="REQUIRED"/>
+		<!-- <tx:method name="delete" propagation="REQUIRED"/> -->
+	</tx:attributes>
+</tx:advice>
+
+<aop:config>
+	<!-- 원하는 지점 -->
+	<aop:pointcut expression="execution(public * com.sds.model..*ServiceImpl.*(..))" id="serviceCut"/>
+	<aop:advisor advice-ref="myTx" pointcut-ref="serviceCut"/>
+</aop:config>
+
+<!-- jdbc 템플릿 세팅 -->
 <bean id="jdbcTemplate" 
 class="org.springframework.jdbc.core.JdbcTemplate"
 p:dataSource-ref="dataSource"></bean>
